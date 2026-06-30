@@ -48,10 +48,18 @@ class LaporanController extends Controller
         }
 
         if ($request->has('print') && $request->input('id_siswa')) {
-            $data = SiswaKelas::with(['siswa.waliSiswa', 'kelasTahunAjaran.kelas', 'kelasTahunAjaran.tahunAjaran'])
-                ->where('id_kelas_tahun_ajaran', $id_kelas)
-                ->where('id_siswa', $request->input('id_siswa'))
-                ->firstOrFail();
+            $query = SiswaKelas::with(['siswa.waliSiswa', 'kelasTahunAjaran.kelas', 'kelasTahunAjaran.tahunAjaran'])
+                ->where('id_siswa', $request->input('id_siswa'));
+            if ($id_kelas) {
+                $query->where('id_kelas_tahun_ajaran', $id_kelas);
+            }
+            $data = $query->latest('id')->first();
+
+            if (!$data) {
+                $siswa = \App\Models\Siswa::with('waliSiswa')->findOrFail($request->input('id_siswa'));
+                $data = new SiswaKelas();
+                $data->setRelation('siswa', $siswa);
+            }
 
             return view('admin.laporan.print_identitas_siswa', compact('data'));
         }
@@ -89,8 +97,18 @@ class LaporanController extends Controller
             $selectedKelas = KelasTahunAjaran::with(['kelas', 'waliKelas', 'tahunAjaran'])->find($id_kelas);
         }
 
-        if ($request->has('print') && $selectedKelas) {
-            return view('admin.laporan.print_identitas_guru', compact('selectedKelas'));
+        if ($request->has('print')) {
+            if ($request->input('id_guru')) {
+                $guru = \App\Models\Guru::findOrFail($request->input('id_guru'));
+                $selectedKelas = KelasTahunAjaran::with(['kelas', 'waliKelas', 'tahunAjaran'])->where('id_wali_kelas', $guru->id)->latest('id')->first();
+                if (!$selectedKelas) {
+                    $selectedKelas = new KelasTahunAjaran();
+                    $selectedKelas->setRelation('waliKelas', $guru);
+                }
+                return view('admin.laporan.print_identitas_guru', compact('selectedKelas'));
+            } elseif ($selectedKelas) {
+                return view('admin.laporan.print_identitas_guru', compact('selectedKelas'));
+            }
         }
 
         return view('admin.laporan.identitas_guru', compact('tahunAjaranList', 'id_ta', 'kelasList', 'id_kelas', 'selectedKelas'));
@@ -124,7 +142,7 @@ class LaporanController extends Controller
                 $queryKelas->where('id_wali_kelas', $refId);
             }
             $kelasList = $queryKelas->get();
-            if (!$id_kelas && $userRole === 'wali_kelas' && $kelasList->isNotEmpty()) {
+            if (!$id_kelas && in_array($userRole, ['wali_kelas', 'siswa']) && $kelasList->isNotEmpty()) {
                 $id_kelas = $kelasList->first()->id;
             }
         }

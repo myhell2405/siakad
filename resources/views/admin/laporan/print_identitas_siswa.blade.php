@@ -131,13 +131,13 @@
                     <td class="py-1"></td>
                     <td class="py-1 pl-6">Di Kelas</td>
                     <td class="py-1">:</td>
-                    <td class="py-1">{{ $data->kelasTahunAjaran->kelas->nama_kelas ?? '-' }}</td>
+                    <td class="py-1">{{ $data->kelasTahunAjaran?->kelas?->nama_kelas ?? '-' }}</td>
                 </tr>
                 <tr class="align-top">
                     <td class="py-1"></td>
                     <td class="py-1 pl-6">Pada Tanggal</td>
                     <td class="py-1">:</td>
-                    <td class="py-1">{{ $s->tanggal_diterima ? \Carbon\Carbon::parse($s->tanggal_diterima)->translatedFormat('d F Y') : '15 Juli ' . ($data->kelasTahunAjaran->tahunAjaran->tahun_ajaran ?? date('Y')) }}</td>
+                    <td class="py-1">{{ $s->tanggal_diterima ? \Carbon\Carbon::parse($s->tanggal_diterima)->translatedFormat('d F Y') : '15 Juli ' . ($data->kelasTahunAjaran?->tahunAjaran?->tahun_ajaran ?? date('Y')) }}</td>
                 </tr>
                 <tr class="align-top">
                     <td class="py-1.5">12.</td>

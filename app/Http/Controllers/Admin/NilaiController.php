@@ -248,7 +248,12 @@ class NilaiController extends Controller
             return $item->siswa_id . '_' . $item->kelas_tahun_ajaran_id;
         });
 
-        return view('admin.nilai.validasi', compact('nilais', 'groupedNilais', 'kelasList'));
+        $listEkskul = \App\Models\Ekskul::orderBy('nama_ekskul')->get();
+        $existingRapors = \App\Models\Rapor::all()->keyBy(function ($item) {
+            return $item->siswa_id . '_' . $item->kelas_tahun_ajaran_id;
+        });
+
+        return view('admin.nilai.validasi', compact('nilais', 'groupedNilais', 'kelasList', 'listEkskul', 'existingRapors'));
     }
 
     /**
@@ -281,7 +286,42 @@ class NilaiController extends Controller
                 ->where('kelas_tahun_ajaran_id', $request->kelas_tahun_ajaran_id)
                 ->where('status_validasi', '!=', 'validated')
                 ->update(['status_validasi' => 'validated']);
-            return redirect()->back()->with('success', 'Semua nilai siswa berhasil divalidasi!');
+
+            \App\Models\Rapor::updateOrCreate(
+                [
+                    'siswa_id' => $request->siswa_id,
+                    'kelas_tahun_ajaran_id' => $request->kelas_tahun_ajaran_id,
+                ],
+                [
+                    'sakit' => $request->input('sakit', 0),
+                    'izin' => $request->input('izin', 0),
+                    'alpa' => $request->input('alpa', 0),
+                    'catatan_wali_kelas' => $request->input('catatan_wali_kelas', 'Tingkatkan terus prestasi belajarmu dan pertahankan semangat belajar yang tinggi.'),
+                    'status_kenaikan' => $request->input('status_kenaikan', 'Naik ke kelas berikutnya'),
+                ]
+            );
+
+            if ($request->has('has_ekskul_form')) {
+                \App\Models\NilaiEkskul::where('siswa_id', $request->siswa_id)
+                    ->where('kelas_tahun_ajaran_id', $request->kelas_tahun_ajaran_id)
+                    ->delete();
+
+                if ($request->has('ekskul') && is_array($request->ekskul)) {
+                    foreach ($request->ekskul as $idEkskul => $dataEkskul) {
+                        if (!empty($dataEkskul['selected'])) {
+                            \App\Models\NilaiEkskul::create([
+                                'siswa_id' => $request->siswa_id,
+                                'kelas_tahun_ajaran_id' => $request->kelas_tahun_ajaran_id,
+                                'id_ekskul' => $idEkskul,
+                                'predikat' => !empty($dataEkskul['predikat']) ? $dataEkskul['predikat'] : 'Baik',
+                                'keterangan' => !empty($dataEkskul['keterangan']) ? $dataEkskul['keterangan'] : 'Mengikuti kegiatan ekstrakurikuler dengan baik',
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            return redirect()->back()->with('success', 'Semua nilai berhasil divalidasi & Rapor siswa resmi diterbitkan (Auto-Generate)!');
         }
 
         $request->validate([

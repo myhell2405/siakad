@@ -216,13 +216,13 @@
                             <span class="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-[0.2em] block truncate">Administrasi Master</span>
                         </li>
                         <li>
-                            <button onclick="toggleMaster()" title="Data Master"
+                            <button onclick="toggleMaster()" title="Mengelola Data Master"
                                 class="group w-full flex justify-between items-center px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.guru.*') || request()->routeIs('admin.siswa.*') || request()->routeIs('admin.wali-siswa.*') || request()->routeIs('admin.kelas.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.ekskul.*') || request()->routeIs('admin.tahun-ajaran.*') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <div class="flex items-center gap-3 min-w-0 truncate">
                                     <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.guru.*') || request()->routeIs('admin.siswa.*') || request()->routeIs('admin.wali-siswa.*') || request()->routeIs('admin.kelas.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.ekskul.*') || request()->routeIs('admin.tahun-ajaran.*') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
                                     </svg>
-                                    <span class="sidebar-text tracking-tight truncate">Data Master</span>
+                                    <span class="sidebar-text tracking-tight truncate">Mengelola Data Master</span>
                                 </div>
                                 <svg class="w-4 h-4 shrink-0 transition-transform duration-200 chevron-icon {{ request()->routeIs('admin.guru.*') || request()->routeIs('admin.siswa.*') || request()->routeIs('admin.wali-siswa.*') || request()->routeIs('admin.kelas.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.ekskul.*') || request()->routeIs('admin.tahun-ajaran.*') ? 'text-white' : 'text-gray-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
@@ -251,53 +251,37 @@
 
                     @if($userRole == 'admin' || in_array('pembagian_kelas', $userPermissions))
                         <li>
-                            <a href="{{ route('admin.pembagian-kelas.index') }}" title="Pembagian Kelas Aktif"
+                            <a href="{{ route('admin.pembagian-kelas.index') }}" title="Manajemen Kelas"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.pembagian-kelas.*') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.pembagian-kelas.*') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Pembagian Kelas Aktif</span>
+                                <span class="sidebar-text tracking-tight truncate">Manajemen Kelas</span>
                             </a>
                         </li>
                     @endif
 
                     @if($userRole == 'admin' || in_array('kelola_nilai_admin', $userPermissions))
                         <li>
-                            <a href="{{ route('admin.nilai.index') }}" title="Kelola Nilai Massal"
+                            <a href="{{ route('admin.nilai.index') }}" title="Pengolahan Nilai Akademik"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.nilai.*') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.nilai.*') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Kelola Nilai Massal</span>
+                                <span class="sidebar-text tracking-tight truncate">Pengolahan Nilai Akademik</span>
                             </a>
                         </li>
                     @endif
 
                     @if($userRole == 'admin' || in_array('laporan_akademik', $userPermissions))
                         <li>
-                            <button onclick="toggleLaporan()" title="Laporan Sekolah"
-                                class="group w-full flex justify-between items-center px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.*') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
-                                <div class="flex items-center gap-3 min-w-0 truncate">
-                                    <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.*') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                    </svg>
-                                    <span class="sidebar-text tracking-tight truncate">Laporan Sekolah</span>
-                                </div>
-                                <svg class="w-4 h-4 shrink-0 transition-transform duration-200 chevron-icon {{ request()->routeIs('admin.laporan.*') ? 'text-white' : 'text-gray-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                            <a href="{{ route('admin.laporan.monitoring') }}" title="Monitoring Nilai Akademik Real-Time"
+                                class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.monitoring') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
+                                <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.monitoring') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                                 </svg>
-                            </button>
-                            <div id="laporanMenu"
-                                class="{{ request()->routeIs('admin.laporan.*') ? '' : 'hidden' }} space-y-0.5 mt-1 ml-4 pl-3.5 border-l border-black/10 py-1 font-mono text-xs">
-                                <a href="{{ route('admin.laporan.identitas-siswa') }}"
-                                    class="block px-3 py-2 rounded-lg transition-all duration-150 truncate {{ request()->routeIs('admin.laporan.identitas-siswa') ? 'font-bold text-signal bg-red-50' : 'text-gray-500 hover:text-void hover:bg-gray-100' }}">Identitas Siswa</a>
-                                <a href="{{ route('admin.laporan.identitas-guru') }}"
-                                    class="block px-3 py-2 rounded-lg transition-all duration-150 truncate {{ request()->routeIs('admin.laporan.identitas-guru') ? 'font-bold text-signal bg-red-50' : 'text-gray-500 hover:text-void hover:bg-gray-100' }}">Identitas Guru</a>
-                                <a href="{{ route('admin.laporan.rapor') }}"
-                                    class="block px-3 py-2 rounded-lg transition-all duration-150 truncate {{ request()->routeIs('admin.laporan.rapor') ? 'font-bold text-signal bg-red-50' : 'text-gray-500 hover:text-void hover:bg-gray-100' }}">Rapor Siswa</a>
-                                <a href="{{ route('admin.laporan.monitoring') }}"
-                                    class="block px-3 py-2 rounded-lg transition-all duration-150 truncate {{ request()->routeIs('admin.laporan.monitoring') ? 'font-bold text-signal bg-red-50' : 'text-gray-500 hover:text-void hover:bg-gray-100' }}">Monitoring Akademik</a>
-                            </div>
+                                <span class="sidebar-text tracking-tight truncate">Monitoring Nilai Akademik Real-Time</span>
+                            </a>
                         </li>
                     @endif
 
@@ -333,12 +317,12 @@
                             <span class="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-[0.2em] block truncate">Portal Guru Mapel</span>
                         </li>
                         <li>
-                            <a href="{{ route('admin.nilai.index') }}" title="Input Nilai Mapel"
+                            <a href="{{ route('admin.nilai.index') }}" title="Pengolahan Nilai Akademik"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.nilai.*') && !request()->routeIs('admin.nilai.validasi') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.nilai.*') && !request()->routeIs('admin.nilai.validasi') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Input Nilai Mapel</span>
+                                <span class="sidebar-text tracking-tight truncate">Pengolahan Nilai Akademik</span>
                             </a>
                         </li>
                     @endif
@@ -351,21 +335,21 @@
                             <span class="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-[0.2em] block truncate">Portal Wali Kelas</span>
                         </li>
                         <li>
-                            <a href="{{ route('admin.nilai.validasi') }}" title="Validasi Nilai Kelas"
+                            <a href="{{ route('admin.nilai.validasi') }}" title="Validasi Nilai Akademik Terintegrasi"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.nilai.validasi') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.nilai.validasi') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Validasi Nilai Kelas</span>
+                                <span class="sidebar-text tracking-tight truncate">Validasi Nilai Akademik Terintegrasi</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor Siswa"
+                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.rapor') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.rapor') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor Siswa</span>
+                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor</span>
                             </a>
                         </li>
                     @endif
@@ -378,21 +362,21 @@
                             <span class="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-[0.2em] block truncate">Portal Siswa</span>
                         </li>
                         <li>
-                            <a href="{{ route('admin.nilai.index') }}" title="Transkrip Nilai"
+                            <a href="{{ route('admin.nilai.index') }}" title="Transkip Nilai Akademik Real-Time"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.nilai.index') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.nilai.index') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Transkrip Nilai</span>
+                                <span class="sidebar-text tracking-tight truncate">Transkip Nilai Akademik Real-Time</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor Mandiri"
+                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.rapor') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.rapor') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor Mandiri</span>
+                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor</span>
                             </a>
                         </li>
                     @endif
@@ -405,30 +389,12 @@
                             <span class="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-[0.2em] block truncate">Eksekutif Pengawas</span>
                         </li>
                         <li>
-                            <a href="{{ route('admin.laporan.monitoring') }}" title="Monitoring Nilai Sekolah"
+                            <a href="{{ route('admin.laporan.monitoring') }}" title="Monitoring Nilai Akademik Real-Time"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.monitoring') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.monitoring') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Monitoring Nilai Sekolah</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.laporan.identitas-siswa') }}" title="Rekapitulasi Laporan"
-                                class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.identitas-*') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
-                                <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.identitas-*') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <span class="sidebar-text tracking-tight truncate">Rekapitulasi Laporan</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.laporan.rapor') }}" title="Arsip Rapor Siswa"
-                                class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.rapor') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
-                                <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.rapor') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
-                                </svg>
-                                <span class="sidebar-text tracking-tight truncate">Arsip Rapor Siswa</span>
+                                <span class="sidebar-text tracking-tight truncate">Monitoring Nilai Akademik Real-Time</span>
                             </a>
                         </li>
                     @endif

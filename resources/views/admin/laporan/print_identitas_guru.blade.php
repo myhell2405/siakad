@@ -91,7 +91,7 @@
                 <tr class="align-top">
                     <td class="py-2">Tugas Mengajar Kls</td>
                     <td class="py-2">:</td>
-                    <td class="py-2 font-bold">{{ $selectedKelas->kelas->nama_kelas ?? '-' }}</td>
+                    <td class="py-2 font-bold">{{ $selectedKelas->kelas?->nama_kelas ?? '-' }}</td>
                 </tr>
                 <tr class="align-top">
                     <td class="py-2">Nama Sekolah</td>

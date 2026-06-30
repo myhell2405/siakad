@@ -154,6 +154,11 @@
                                     class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-void text-void hover:text-white flex items-center justify-center transition">
                                     <i class="bi bi-eye-fill text-xs"></i>
                                 </button>
+                                <a href="{{ route('admin.laporan.identitas-guru', ['id_guru' => $g->id, 'print' => 1]) }}" target="_blank"
+                                   title="Cetak Lembar Identitas"
+                                   class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-blue-600 hover:text-white text-void flex items-center justify-center transition">
+                                    <i class="bi bi-printer-fill text-xs"></i>
+                                </a>
                                 <a href="{{ route('admin.guru.edit', $g->id) }}"
                                    title="Edit Data"
                                    class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-amber-500 hover:text-white text-void flex items-center justify-center transition">

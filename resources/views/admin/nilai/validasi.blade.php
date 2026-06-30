@@ -133,17 +133,16 @@
                         </div>
                     </div>
 
-                    @if($pendingCount > 0)
-                        <form action="{{ route('admin.nilai.validasi.submit') }}" method="POST" onsubmit="return confirm('Validasi semua nilai untuk {{ $siswa->nama_siswa }}?');">
-                            @csrf
-                            <input type="hidden" name="id_nilai" value="all_siswa">
-                            <input type="hidden" name="siswa_id" value="{{ $siswa->id_siswa ?? $siswa->id }}">
-                            <input type="hidden" name="kelas_tahun_ajaran_id" value="{{ $first->kelas_tahun_ajaran_id }}">
-                            <button type="submit" class="px-5 py-2.5 bg-void hover:bg-black text-white font-mono font-bold rounded-xl text-xs shadow-xs transition inline-flex items-center gap-2 uppercase">
-                                <i class="bi bi-check-all text-signal text-sm"></i> VALIDASI SISWA INI
-                            </button>
-                        </form>
-                    @endif
+                    <div class="flex items-center gap-2">
+                        <button onclick="document.getElementById('modal_val_{{ $groupKey }}').classList.remove('hidden')" class="px-5 py-2.5 bg-void hover:bg-black text-white font-mono font-bold rounded-xl text-xs shadow-xs transition inline-flex items-center gap-2 uppercase">
+                            <i class="bi bi-check2-square text-signal text-sm"></i> {{ $pendingCount > 0 ? 'CEK & VALIDASI TERBIT RAPOR' : 'UPDATE REKAP & RAPOR' }}
+                        </button>
+                        @if($validCount > 0 && $pendingCount == 0)
+                            <a href="{{ route('admin.laporan.rapor', ['id_kelas' => $first->kelas_tahun_ajaran_id, 'id_siswa' => $siswa->id ?? $siswa->id_siswa, 'print' => 1]) }}" target="_blank" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-mono font-bold rounded-xl text-xs shadow-xs transition inline-flex items-center gap-2 uppercase">
+                                <i class="bi bi-printer-fill text-sm"></i> CETAK RAPOR
+                            </a>
+                        @endif
+                    </div>
                 </div>
 
                 {{-- Card Table Nilai --}}
@@ -198,6 +197,107 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            @php
+                $raporSiswa = $existingRapors[$groupKey] ?? null;
+            @endphp
+            {{-- MODAL VALIDASI & TERBITKAN RAPOR --}}
+            <div id="modal_val_{{ $groupKey }}" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+                <div class="bg-white rounded-3xl border border-black/10 shadow-2xl max-w-2xl w-full p-6 sm:p-8 my-8 max-h-[90vh] overflow-y-auto font-sans">
+                    <div class="flex items-center justify-between border-b border-gray-200 pb-4 mb-6">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-[0.2em] block">TAHAP FINAL WALI KELAS</span>
+                            <h3 class="text-xl font-black text-void uppercase">VALIDASI & TERBITKAN RAPOR</h3>
+                            <p class="text-xs text-gray-500 font-mono mt-0.5 uppercase">SISWA: <strong class="text-void">{{ $siswa->nama_siswa }}</strong></p>
+                        </div>
+                        <button type="button" onclick="document.getElementById('modal_val_{{ $groupKey }}').classList.add('hidden')" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center font-bold text-sm">✕</button>
+                    </div>
+
+                    <form action="{{ route('admin.nilai.validasi.submit') }}" method="POST" class="space-y-6">
+                        @csrf
+                        <input type="hidden" name="id_nilai" value="all_siswa">
+                        <input type="hidden" name="siswa_id" value="{{ $siswa->id ?? $siswa->id_siswa }}">
+                        <input type="hidden" name="kelas_tahun_ajaran_id" value="{{ $first->kelas_tahun_ajaran_id }}">
+                        <input type="hidden" name="has_ekskul_form" value="1">
+
+                        {{-- REKAP ABSENSI --}}
+                        <div class="bg-gray-50 p-5 rounded-2xl border border-black/10 space-y-3">
+                            <h4 class="text-xs font-mono font-bold text-void uppercase flex items-center gap-2">
+                                <i class="bi bi-calendar-check text-cobalt"></i> 1. REKAP KEHADIRAN SISWA (SEMESTER INI)
+                            </h4>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-mono font-bold text-gray-600 uppercase mb-1">SAKIT (HARI)</label>
+                                    <input type="number" name="sakit" min="0" value="{{ $raporSiswa->sakit ?? 0 }}" class="w-full bg-white border border-black/10 rounded-xl px-3 py-2 text-xs font-mono font-bold text-center">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-mono font-bold text-gray-600 uppercase mb-1">IZIN (HARI)</label>
+                                    <input type="number" name="izin" min="0" value="{{ $raporSiswa->izin ?? 0 }}" class="w-full bg-white border border-black/10 rounded-xl px-3 py-2 text-xs font-mono font-bold text-center">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-mono font-bold text-gray-600 uppercase mb-1">ALPA (HARI)</label>
+                                    <input type="number" name="alpa" min="0" value="{{ $raporSiswa->alpa ?? 0 }}" class="w-full bg-white border border-black/10 rounded-xl px-3 py-2 text-xs font-mono font-bold text-center">
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- EKSKUL --}}
+                        <div class="bg-gray-50 p-5 rounded-2xl border border-black/10 space-y-3">
+                            <h4 class="text-xs font-mono font-bold text-void uppercase flex items-center gap-2">
+                                <i class="bi bi-trophy text-amber-500"></i> 2. EKSTRAKURIKULER
+                            </h4>
+                            <div class="space-y-3">
+                                @forelse($listEkskul as $ek)
+                                    <div class="bg-white p-3.5 rounded-xl border border-black/10 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                                        <div class="sm:col-span-4 flex items-center gap-2">
+                                            <input type="checkbox" name="ekskul[{{ $ek->id_ekskul }}][selected]" value="1" id="ek_{{ $groupKey }}_{{ $ek->id_ekskul }}" class="w-4 h-4 rounded text-void">
+                                            <label for="ek_{{ $groupKey }}_{{ $ek->id_ekskul }}" class="text-xs font-bold text-void uppercase cursor-pointer">{{ $ek->nama_ekskul }}</label>
+                                        </div>
+                                        <div class="sm:col-span-3">
+                                            <select name="ekskul[{{ $ek->id_ekskul }}][predikat]" class="w-full bg-gray-50 border border-black/10 rounded-lg px-2.5 py-1.5 text-xs font-mono font-bold">
+                                                <option value="Sangat Baik">Sangat Baik</option>
+                                                <option value="Baik" selected>Baik</option>
+                                                <option value="Cukup">Cukup</option>
+                                            </select>
+                                        </div>
+                                        <div class="sm:col-span-5">
+                                            <input type="text" name="ekskul[{{ $ek->id_ekskul }}][keterangan]" placeholder="Keterangan..." value="Mengikuti kegiatan dengan baik" class="w-full bg-gray-50 border border-black/10 rounded-lg px-2.5 py-1.5 text-xs font-mono">
+                                        </div>
+                                    </div>
+                                @empty
+                                    <p class="text-xs text-gray-400 font-mono uppercase">Belum ada master ekstrakurikuler.</p>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        {{-- CATATAN WALI KELAS --}}
+                        <div class="bg-gray-50 p-5 rounded-2xl border border-black/10 space-y-3">
+                            <h4 class="text-xs font-mono font-bold text-void uppercase flex items-center gap-2">
+                                <i class="bi bi-chat-left-quote text-signal"></i> 3. CATATAN & STATUS KENAIKAN
+                            </h4>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-gray-600 uppercase mb-1">CATATAN WALI KELAS UNTUK SISWA</label>
+                                <textarea name="catatan_wali_kelas" rows="3" class="w-full bg-white border border-black/10 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-void">{{ $raporSiswa->catatan_wali_kelas ?? 'Tingkatkan terus prestasi belajarmu dan pertahankan semangat belajar yang tinggi.' }}</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-gray-600 uppercase mb-1">STATUS KENAIKAN KELAS / KELULUSAN</label>
+                                <select name="status_kenaikan" class="w-full bg-white border border-black/10 rounded-xl px-3 py-2 text-xs font-mono font-bold">
+                                    <option value="Naik ke kelas berikutnya" {{ ($raporSiswa->status_kenaikan ?? '') == 'Naik ke kelas berikutnya' ? 'selected' : '' }}>Naik ke kelas berikutnya</option>
+                                    <option value="Tinggal di kelas saat ini" {{ ($raporSiswa->status_kenaikan ?? '') == 'Tinggal di kelas saat ini' ? 'selected' : '' }}>Tinggal di kelas saat ini</option>
+                                    <option value="Lulus" {{ ($raporSiswa->status_kenaikan ?? '') == 'Lulus' ? 'selected' : '' }}>Lulus</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                            <button type="button" onclick="document.getElementById('modal_val_{{ $groupKey }}').classList.add('hidden')" class="px-5 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 text-void font-mono font-bold text-xs transition uppercase">Batal</button>
+                            <button type="submit" class="px-6 py-3 rounded-xl bg-void hover:bg-black text-white font-mono font-bold text-xs shadow-lg transition flex items-center gap-2 uppercase">
+                                <i class="bi bi-check2-all text-signal"></i> VALIDASI & TERBITKAN RAPOR SEKARANG
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         @empty
