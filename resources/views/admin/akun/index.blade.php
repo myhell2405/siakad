@@ -1,29 +1,22 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="space-y-10 font-sans text-slate-800 pb-16">
+<div class="space-y-8 max-w-7xl mx-auto font-sans pb-16 text-gray-900">
 
-    {{-- ================================================
-         HERO HEADER SECTION
-         ================================================ --}}
-    <div class="bg-white rounded-[2.2rem] p-8 sm:p-10 shadow-[0_12px_45px_-10px_rgba(0,0,0,0.06)] relative overflow-hidden flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 ring-1 ring-slate-900/[0.03]">
-        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
-
+    {{-- HERO HEADER --}}
+    <div class="bg-white rounded-3xl p-8 sm:p-10 border border-black/10 shadow-xs relative flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
         <div class="flex items-center gap-5 relative z-10">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-indigo-500/25 shrink-0">
-                <i class="bi bi-shield-lock-fill text-3xl"></i>
+            <div class="w-16 h-16 rounded-2xl bg-void text-white flex items-center justify-center border border-black shadow-md shrink-0">
+                <i class="bi bi-shield-lock-fill text-3xl text-signal"></i>
             </div>
             <div class="space-y-1.5">
-                <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.15em] font-black bg-indigo-50 text-indigo-700 ring-1 ring-indigo-500/20 shadow-2xs">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
-                    </span>
-                    <span>Otoritas & Kredensial</span>
+                <div class="inline-flex items-center gap-2 rounded-md px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] font-mono font-bold bg-surface text-void border border-black/10 mb-1">
+                    <span class="w-2 h-2 rounded-full bg-signal animate-pulse inline-block"></span>
+                    <span>OTORITAS & KREDENSIAL</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Manajemen Akun Pengguna</h1>
-                <p class="text-xs text-slate-400 font-bold flex items-center gap-2 pt-0.5">
-                    <span>Kelola kredensial login seluruh warga sekolah (Admin, Guru, Siswa, Kepsek)</span>
+                <h1 class="text-3xl sm:text-4xl font-black text-void tracking-tight uppercase">MANAJEMEN AKUN PENGGUNA</h1>
+                <p class="text-xs text-gray-500 font-mono uppercase">
+                    KELOLA KREDENSIAL LOGIN SELURUH WARGA SEKOLAH (ADMIN, GURU, SISWA, KEPALA SEKOLAH)
                 </p>
             </div>
         </div>
@@ -32,57 +25,49 @@
             <!-- Generate Guru -->
             <form action="{{ route('admin.akun.generate-guru') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin me-generate akun login otomatis untuk semua Guru aktif yang belum memiliki akun? Password default adalah 1234.')">
                 @csrf
-                <button type="submit" class="inline-flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold rounded-2xl shadow-md shadow-emerald-500/20 transition-all active:scale-95">
-                    <i class="bi bi-magic text-sm"></i> Generate Akun Guru
+                <button type="submit" class="inline-flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-void text-void hover:text-white border border-black/10 text-xs font-mono font-bold rounded-xl shadow-2xs transition-all uppercase">
+                    <i class="bi bi-magic text-signal"></i> GENERATE AKUN GURU
                 </button>
             </form>
 
             <!-- Generate Siswa -->
             <form action="{{ route('admin.akun.generate-siswa') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin me-generate akun login otomatis untuk semua Siswa aktif yang belum memiliki akun? Password default adalah 1234.')">
                 @csrf
-                <button type="submit" class="inline-flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-xs font-bold rounded-2xl shadow-md shadow-teal-500/20 transition-all active:scale-95">
-                    <i class="bi bi-magic text-sm"></i> Generate Akun Siswa
+                <button type="submit" class="inline-flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-void text-void hover:text-white border border-black/10 text-xs font-mono font-bold rounded-xl shadow-2xs transition-all uppercase">
+                    <i class="bi bi-magic text-signal"></i> GENERATE AKUN SISWA
                 </button>
             </form>
 
             <!-- Tambah Manual -->
-            <button onclick="openAddModal()" class="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-bold rounded-2xl shadow-lg shadow-blue-500/25 transition-all active:scale-95">
-                <i class="bi bi-plus-lg text-sm font-black"></i> Tambah Akun
+            <button onclick="openAddModal()" class="inline-flex items-center gap-2 px-5 py-3 bg-void hover:bg-black text-white text-xs font-mono font-bold rounded-xl shadow-md transition-all active:scale-95 uppercase">
+                <i class="bi bi-plus-lg text-signal"></i> TAMBAH AKUN
             </button>
         </div>
     </div>
 
     {{-- Alert Messages --}}
     @if(session('success'))
-        <div class="bg-emerald-50 ring-1 ring-emerald-500/20 text-emerald-900 p-4 rounded-2xl shadow-sm flex items-center justify-between text-xs font-bold animate-fade-in">
+        <div class="bg-emerald-50 border border-emerald-500/30 text-emerald-900 p-4 rounded-2xl shadow-xs flex items-center justify-between text-xs font-mono font-bold uppercase">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-md shadow-emerald-500/20">
-                    <i class="bi bi-check-lg text-sm font-black"></i>
-                </div>
+                <i class="bi bi-check-circle-fill text-emerald-600 text-base"></i>
                 <span>{{ session('success') }}</span>
             </div>
-            <button onclick="this.parentElement.remove()" class="w-7 h-7 rounded-lg hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition">
-                <i class="bi bi-x-lg text-xs font-bold"></i>
-            </button>
+            <button onclick="this.parentElement.remove()" class="w-7 h-7 rounded-lg hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition">✕</button>
         </div>
     @endif
 
     @if(session('error'))
-        <div class="bg-rose-50 ring-1 ring-rose-500/20 text-rose-900 p-4 rounded-2xl shadow-sm flex items-center justify-between text-xs font-bold">
+        <div class="bg-red-50 border border-red-500/30 text-red-900 p-4 rounded-2xl shadow-xs flex items-center justify-between text-xs font-mono font-bold uppercase">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 text-white flex items-center justify-center shadow-md shadow-rose-500/20">
-                    <i class="bi bi-exclamation-triangle-fill text-sm font-black"></i>
-                </div>
+                <i class="bi bi-exclamation-triangle-fill text-red-600 text-base"></i>
                 <span>{{ session('error') }}</span>
             </div>
-            <button onclick="this.parentElement.remove()" class="w-7 h-7 rounded-lg hover:bg-rose-100 text-rose-600 flex items-center justify-center transition">
-                <i class="bi bi-x-lg text-xs font-bold"></i>
-            </button>
+            <button onclick="this.parentElement.remove()" class="w-7 h-7 rounded-lg hover:bg-red-100 text-red-600 flex items-center justify-center transition">✕</button>
         </div>
     @endif
 
     @if($errors->any())
-        <div class="bg-rose-50 ring-1 ring-rose-500/20 text-rose-900 p-4 rounded-2xl shadow-sm text-xs font-bold">
+        <div class="bg-red-50 border border-red-500/30 text-red-900 p-4 rounded-2xl shadow-xs text-xs font-mono font-bold uppercase">
             <ul class="list-disc list-inside space-y-1">
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -91,28 +76,26 @@
         </div>
     @endif
 
-    {{-- ================================================
-         FILTER & SEARCH CARD
-         ================================================ --}}
-    <div class="bg-white rounded-3xl p-6 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.05)] ring-1 ring-slate-900/[0.03]">
+    {{-- FILTER & SEARCH CARD --}}
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-black/10 shadow-xs">
         <form method="GET" action="{{ route('admin.akun.index') }}" class="grid grid-cols-1 md:grid-cols-12 gap-5 items-end">
             <!-- Cari Username / Nama -->
-            <div class="md:col-span-5 min-w-0 space-y-1.5">
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500">Cari Pengguna</label>
+            <div class="md:col-span-5 min-w-0 space-y-2">
+                <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void">CARI PENGGUNA</label>
                 <div class="relative">
-                    <i class="bi bi-search absolute left-4 top-3.5 text-slate-400 text-xs"></i>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari username, NIP, NISN, atau nama..." class="w-full bg-slate-50 hover:bg-slate-100/70 border border-slate-200/80 rounded-2xl pl-10 pr-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-600 transition-all shadow-inner">
+                    <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari username, NIP, NISN, atau nama..." class="w-full bg-gray-50 hover:bg-gray-100/70 border border-black/10 rounded-xl pl-10 pr-4 py-3 text-xs font-mono font-bold text-void placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition-all shadow-2xs">
                 </div>
             </div>
 
             <!-- Filter Role -->
-            <div class="md:col-span-4 min-w-0 space-y-1.5">
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500">Filter Role</label>
-                <select name="role_id" onchange="this.form.submit()" class="w-full bg-slate-50 hover:bg-slate-100/70 border border-slate-200/80 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-600 transition-all shadow-inner">
-                    <option value="">-- Semua Role --</option>
+            <div class="md:col-span-4 min-w-0 space-y-2">
+                <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void">FILTER ROLE</label>
+                <select name="role_id" onchange="this.form.submit()" class="w-full bg-gray-50 hover:bg-gray-100/70 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition-all uppercase">
+                    <option value="">-- SEMUA ROLE --</option>
                     @foreach($roles as $role)
                         <option value="{{ $role->id_role }}" {{ request('role_id') == $role->id_role ? 'selected' : '' }}>
-                            {{ ucfirst($role->nama_role) }}
+                            {{ strtoupper(str_replace('_', ' ', $role->nama_role)) }}
                         </option>
                     @endforeach
                 </select>
@@ -120,11 +103,11 @@
 
             <!-- Tombol Filter -->
             <div class="md:col-span-3 flex gap-2">
-                <button type="submit" class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-2xl shadow-lg shadow-indigo-500/25 transition-all flex items-center justify-center gap-2 text-xs active:scale-[0.98]">
-                    <i class="bi bi-funnel-fill"></i> Filter
+                <button type="submit" class="flex-1 bg-void hover:bg-black text-white font-mono font-bold py-3 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs uppercase">
+                    <i class="bi bi-funnel-fill text-signal"></i> FILTER
                 </button>
                 @if(request('search') || request('role_id'))
-                    <a href="{{ route('admin.akun.index') }}" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 px-4 rounded-2xl transition flex items-center justify-center text-xs active:scale-95" title="Reset Filter">
+                    <a href="{{ route('admin.akun.index') }}" class="bg-gray-100 hover:bg-gray-200 text-void font-bold py-3 px-4 rounded-xl transition flex items-center justify-center text-xs" title="Reset Filter">
                         <i class="bi bi-arrow-counterclockwise text-sm"></i>
                     </a>
                 @endif
@@ -132,68 +115,78 @@
         </form>
     </div>
 
-    {{-- ================================================
-         TABLE CARD
-         ================================================ --}}
-    <div class="bg-white rounded-3xl shadow-[0_12px_45px_-10px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/[0.03] overflow-hidden">
+    {{-- TABLE CARD --}}
+    <div class="bg-white rounded-3xl border border-black/10 shadow-xs overflow-hidden">
+        <div class="p-6 border-b border-black/10 bg-gray-50 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-void text-white flex items-center justify-center font-bold shadow-xs">
+                    <i class="bi bi-people-fill text-signal"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-void text-sm uppercase">DAFTAR KREDENSIAL PENGGUNA</h3>
+                    <p class="text-xs text-gray-500 font-mono uppercase">MENAMPILKAN SEMUA AKUN SISTEM YANG TERDAFTAR</p>
+                </div>
+            </div>
+        </div>
+
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-slate-50/80 text-slate-400 text-[10px] font-black uppercase tracking-widest border-b border-slate-100">
-                        <th class="py-4 px-6 text-center w-16">No</th>
-                        <th class="py-4 px-6">Username / Login ID</th>
-                        <th class="py-4 px-6">Nama Pemilik Akun</th>
-                        <th class="py-4 px-6 text-center">Role</th>
-                        <th class="py-4 px-6 text-center">Status</th>
-                        <th class="py-4 px-6 text-center w-48">Aksi</th>
+                    <tr class="bg-surface text-void font-mono text-[10px] uppercase tracking-wider border-b border-black/10">
+                        <th class="py-4 pl-6 text-center w-16">NO</th>
+                        <th class="py-4 px-6">USERNAME / LOGIN ID</th>
+                        <th class="py-4 px-6">NAMA PEMILIK AKUN</th>
+                        <th class="py-4 px-6 text-center">ROLE</th>
+                        <th class="py-4 px-6 text-center">STATUS</th>
+                        <th class="py-4 pr-6 text-center w-48">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 text-xs font-semibold">
+                <tbody class="divide-y divide-black/5 text-xs font-semibold text-gray-700">
                     @forelse($users as $index => $user)
-                        <tr class="hover:bg-slate-50/80 transition duration-150">
-                            <td class="py-4 px-6 text-center font-bold text-slate-400">{{ $users->firstItem() + $index }}</td>
-                            <td class="py-4 px-6 font-mono font-black text-slate-900 text-sm">{{ $user->username }}</td>
+                        <tr class="hover:bg-gray-50/80 transition duration-150">
+                            <td class="py-4 pl-6 text-center font-mono font-bold text-gray-400">{{ $users->firstItem() + $index }}</td>
+                            <td class="py-4 px-6 font-mono font-black text-void text-sm">{{ $user->username }}</td>
                             <td class="py-4 px-6">
                                 @if($user->guru)
-                                    <span class="font-extrabold text-indigo-600 block text-sm">{{ $user->guru->nama_lengkap }}</span>
-                                    <span class="text-[11px] text-slate-400 font-bold">NIP: {{ $user->guru->nip }}</span>
+                                    <span class="font-bold text-void block text-sm uppercase">{{ $user->guru->nama_lengkap }}</span>
+                                    <span class="text-[10px] text-cobalt font-mono uppercase font-bold">NIP: {{ $user->guru->nip ?? '-' }}</span>
                                 @elseif($user->siswa)
-                                    <span class="font-extrabold text-teal-600 block text-sm">{{ $user->siswa->nama_siswa }}</span>
-                                    <span class="text-[11px] text-slate-400 font-bold">NISN: {{ $user->siswa->nisn }}</span>
+                                    <span class="font-bold text-void block text-sm uppercase">{{ $user->siswa->nama_siswa }}</span>
+                                    <span class="text-[10px] text-emerald-700 font-mono uppercase font-bold">NISN: {{ $user->siswa->nisn ?? '-' }}</span>
                                 @else
-                                    <span class="text-slate-400 italic font-medium">Administrator / Umum</span>
+                                    <span class="text-gray-400 italic font-mono uppercase">ADMINISTRATOR / UMUM</span>
                                 @endif
                             </td>
                             <td class="py-4 px-6 text-center">
                                 @php
                                     $badgeColor = match($user->role?->nama_role) {
-                                        'admin' => 'bg-purple-50 text-purple-700 ring-1 ring-purple-500/20 font-black',
-                                        'guru' => 'bg-blue-50 text-blue-700 ring-1 ring-blue-500/20 font-black',
-                                        'wali_kelas' => 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-500/20 font-black',
-                                        'kepala_sekolah' => 'bg-amber-50 text-amber-700 ring-1 ring-amber-500/20 font-black',
-                                        'siswa' => 'bg-teal-50 text-teal-700 ring-1 ring-teal-500/20 font-black',
-                                        default => 'bg-slate-100 text-slate-700 font-bold'
+                                        'admin' => 'bg-void text-signal border border-black font-mono font-bold',
+                                        'guru' => 'bg-gray-100 text-void border border-black/10 font-mono font-bold',
+                                        'wali_kelas' => 'bg-cobalt/10 text-cobalt border border-cobalt/20 font-mono font-bold',
+                                        'kepala_sekolah' => 'bg-signal/20 text-void border border-black/10 font-mono font-bold',
+                                        'siswa' => 'bg-surface text-void border border-black/10 font-mono font-bold',
+                                        default => 'bg-gray-100 text-gray-700 font-mono font-bold'
                                     };
                                 @endphp
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] {{ $badgeColor }}">
-                                    {{ ucfirst(str_replace('_', ' ', $user->role?->nama_role ?? 'Unknown')) }}
+                                <span class="inline-flex items-center px-3 py-1 rounded text-[10px] uppercase {{ $badgeColor }}">
+                                    {{ strtoupper(str_replace('_', ' ', $user->role?->nama_role ?? 'UNKNOWN')) }}
                                 </span>
                             </td>
                             <td class="py-4 px-6 text-center">
                                 @if($user->status == 'aktif')
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500/20">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Aktif
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded text-[10px] font-mono font-bold uppercase bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> AKTIF
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black bg-rose-50 text-rose-700 ring-1 ring-rose-500/20">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Tidak Aktif
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded text-[10px] font-mono font-bold uppercase bg-void text-signal border border-black">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-signal"></span> TIDAK AKTIF
                                     </span>
                                 @endif
                             </td>
-                            <td class="py-4 px-6 text-center">
+                            <td class="py-4 pr-6 text-center">
                                 <div class="flex items-center justify-center gap-2">
                                     <!-- Edit -->
-                                    <button onclick="openEditModal('{{ $user->id_user }}', '{{ $user->username }}', '{{ $user->role_id }}', '{{ $user->ref_id }}', '{{ $user->status }}')" class="w-8 h-8 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-600 flex items-center justify-center transition active:scale-90 shadow-2xs" title="Edit Akun">
+                                    <button onclick="openEditModal('{{ $user->id_user }}', '{{ addslashes($user->username) }}', '{{ $user->role_id }}', '{{ $user->ref_id }}', '{{ $user->status }}')" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-void hover:text-white text-void flex items-center justify-center transition shadow-2xs border border-black/10" title="Edit Akun">
                                         <i class="bi bi-pencil-square text-xs font-bold"></i>
                                     </button>
 
@@ -201,17 +194,27 @@
                                     <form action="{{ route('admin.akun.reset-password', $user->id_user) }}" method="POST" onsubmit="return confirm('Reset password pengguna ini menjadi default (1234)?')">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition active:scale-90 shadow-2xs" title="Reset Password ke 1234">
+                                        <button type="submit" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-void hover:text-signal text-void flex items-center justify-center transition shadow-2xs border border-black/10" title="Reset Password ke 1234">
                                             <i class="bi bi-key-fill text-xs"></i>
                                         </button>
                                     </form>
+
+                                    <!-- Impersonate -->
+                                    @if(session('id_user') != $user->id_user && $user->status == 'aktif')
+                                        <form action="{{ route('admin.akun.impersonate', $user->id_user) }}" method="POST" onsubmit="return confirm('Login menggunakan akun ini ({{ addslashes($user->username) }})?')">
+                                            @csrf
+                                            <button type="submit" class="w-8 h-8 rounded-lg bg-cobalt/10 hover:bg-cobalt hover:text-white text-cobalt flex items-center justify-center transition shadow-2xs border border-cobalt/20" title="Login Menggunakan Akun Ini (Impersonate)">
+                                                <i class="bi bi-box-arrow-in-right text-xs font-bold"></i>
+                                            </button>
+                                        </form>
+                                    @endif
 
                                     <!-- Hapus -->
                                     @if(session('id_user') != $user->id_user)
                                         <form action="{{ route('admin.akun.destroy', $user->id_user) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun ini?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="w-8 h-8 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 flex items-center justify-center transition active:scale-90 shadow-2xs" title="Hapus Akun">
+                                            <button type="submit" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-red-600 hover:text-white text-red-600 flex items-center justify-center transition shadow-2xs border border-black/10" title="Hapus Akun">
                                                 <i class="bi bi-trash-fill text-xs"></i>
                                             </button>
                                         </form>
@@ -221,8 +224,9 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-16 text-center text-slate-400 italic font-medium">
-                                Belum ada data akun pengguna.
+                            <td colspan="6" class="py-16 text-center text-gray-400 font-mono uppercase">
+                                <i class="bi bi-inbox text-3xl block mb-2 text-gray-300"></i>
+                                BELUM ADA DATA AKUN PENGGUNA.
                             </td>
                         </tr>
                     @endforelse
@@ -231,7 +235,7 @@
         </div>
 
         @if($users->hasPages())
-            <div class="p-6 bg-slate-50/50 border-t border-slate-100">
+            <div class="p-6 bg-gray-50 border-t border-black/10">
                 {{ $users->links() }}
             </div>
         @endif
@@ -239,75 +243,77 @@
 </div>
 
 <!-- Modal Tambah Akun -->
-<div id="addModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl ring-1 ring-slate-900/10 animate-scale-up">
-        <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-6">
+<div id="addModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-black shadow-2xl">
+        <div class="flex justify-between items-center pb-4 border-b border-black/10 mb-6">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black">
-                    <i class="bi bi-person-plus-fill text-lg"></i>
+                <div class="w-10 h-10 rounded-xl bg-void text-white flex items-center justify-center font-bold shadow-xs">
+                    <i class="bi bi-person-plus-fill text-signal text-lg"></i>
                 </div>
-                <h3 class="text-base font-black text-slate-900">Tambah Akun Pengguna</h3>
+                <h3 class="text-base font-black text-void uppercase">TAMBAH AKUN PENGGUNA</h3>
             </div>
-            <button onclick="closeAddModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition font-bold">&times;</button>
+            <button onclick="closeAddModal()" class="w-8 h-8 rounded-xl bg-gray-100 hover:bg-void hover:text-white text-void font-bold flex items-center justify-center transition">&times;</button>
         </div>
 
         <form action="{{ route('admin.akun.store') }}" method="POST">
             @csrf
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Username / Login ID</label>
-                    <input type="text" name="username" required placeholder="Contoh: admin2 atau NIP/NISN" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-600 transition">
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">USERNAME / LOGIN ID</label>
+                    <input type="text" name="username" required placeholder="Contoh: admin2 atau NIP/NISN" class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Password</label>
-                    <input type="password" name="password" required placeholder="Minimal 4 karakter" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-600 transition">
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">PASSWORD</label>
+                    <input type="password" name="password" required placeholder="Minimal 4 karakter" class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Role / Hak Akses</label>
-                    <select name="role_id" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-600 transition">
-                        <option value="">-- Pilih Role --</option>
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">ROLE / HAK AKSES</label>
+                    <select name="role_id" required class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition uppercase">
+                        <option value="">-- PILIH ROLE --</option>
                         @foreach($roles as $role)
-                            <option value="{{ $role->id_role }}">{{ ucfirst($role->nama_role) }}</option>
+                            <option value="{{ $role->id_role }}">{{ strtoupper(str_replace('_', ' ', $role->nama_role)) }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Ref ID (Opsional)</label>
-                    <input type="number" name="ref_id" placeholder="ID Guru / ID Siswa (jika ada)" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-600 transition">
-                    <p class="text-[11px] font-semibold text-slate-400 mt-1">*Kosongkan jika akun Administrator / Kepala Sekolah.</p>
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">REF ID (OPSIONAL)</label>
+                    <input type="number" name="ref_id" placeholder="ID Guru / ID Siswa (jika ada)" class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition">
+                    <p class="text-[10px] font-mono text-gray-400 mt-1 uppercase">*Kosongkan jika akun Administrator / Kepala Sekolah.</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Status Akun</label>
-                    <select name="status" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-600 transition">
-                        <option value="aktif">Aktif</option>
-                        <option value="tidak aktif">Tidak Aktif</option>
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">STATUS AKUN</label>
+                    <select name="status" required class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition uppercase">
+                        <option value="aktif">AKTIF</option>
+                        <option value="tidak aktif">TIDAK AKTIF</option>
                     </select>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-slate-100">
-                <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-xs font-bold transition">Batal</button>
-                <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-2xl text-xs font-bold shadow-lg shadow-indigo-500/25 transition active:scale-95">Simpan</button>
+            <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-black/10">
+                <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-void rounded-xl text-xs font-mono font-bold transition uppercase">BATAL</button>
+                <button type="submit" class="px-6 py-2.5 bg-void hover:bg-black text-white rounded-xl text-xs font-mono font-bold shadow-md transition uppercase inline-flex items-center gap-2">
+                    <i class="bi bi-save2 text-signal"></i> SIMPAN
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <!-- Modal Edit Akun -->
-<div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl ring-1 ring-slate-900/10 animate-scale-up">
-        <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-6">
+<div id="editModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-black shadow-2xl">
+        <div class="flex justify-between items-center pb-4 border-b border-black/10 mb-6">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-black">
-                    <i class="bi bi-pencil-square text-lg"></i>
+                <div class="w-10 h-10 rounded-xl bg-void text-white flex items-center justify-center font-bold shadow-xs">
+                    <i class="bi bi-pencil-square text-signal text-lg"></i>
                 </div>
-                <h3 class="text-base font-black text-slate-900">Edit Akun Pengguna</h3>
+                <h3 class="text-base font-black text-void uppercase">EDIT AKUN PENGGUNA</h3>
             </div>
-            <button onclick="closeEditModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition font-bold">&times;</button>
+            <button onclick="closeEditModal()" class="w-8 h-8 rounded-xl bg-gray-100 hover:bg-void hover:text-white text-void font-bold flex items-center justify-center transition">&times;</button>
         </div>
 
         <form id="editForm" method="POST">
@@ -315,41 +321,43 @@
             @method('PUT')
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Username / Login ID</label>
-                    <input type="text" name="username" id="edit_username" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-amber-500/15 focus:border-amber-600 transition">
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">USERNAME / LOGIN ID</label>
+                    <input type="text" name="username" id="edit_username" required class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Password Baru (Opsional)</label>
-                    <input type="password" name="password" placeholder="Kosongkan jika tidak ingin merubah" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-amber-500/15 focus:border-amber-600 transition">
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">PASSWORD BARU (OPSIONAL)</label>
+                    <input type="password" name="password" placeholder="Kosongkan jika tidak ingin merubah" class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Role / Hak Akses</label>
-                    <select name="role_id" id="edit_role_id" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-amber-500/15 focus:border-amber-600 transition">
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">ROLE / HAK AKSES</label>
+                    <select name="role_id" id="edit_role_id" required class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition uppercase">
                         @foreach($roles as $role)
-                            <option value="{{ $role->id_role }}">{{ ucfirst($role->nama_role) }}</option>
+                            <option value="{{ $role->id_role }}">{{ strtoupper(str_replace('_', ' ', $role->nama_role)) }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Ref ID (Opsional)</label>
-                    <input type="number" name="ref_id" id="edit_ref_id" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-amber-500/15 focus:border-amber-600 transition">
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">REF ID (OPSIONAL)</label>
+                    <input type="number" name="ref_id" id="edit_ref_id" class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-600 mb-1.5">Status Akun</label>
-                    <select name="status" id="edit_status" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-amber-500/15 focus:border-amber-600 transition">
-                        <option value="aktif">Aktif</option>
-                        <option value="tidak aktif">Tidak Aktif</option>
+                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-void mb-1.5">STATUS AKUN</label>
+                    <select name="status" id="edit_status" required class="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-xs font-mono font-bold text-void focus:bg-white focus:outline-none focus:ring-2 focus:ring-void transition uppercase">
+                        <option value="aktif">AKTIF</option>
+                        <option value="tidak aktif">TIDAK AKTIF</option>
                     </select>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-slate-100">
-                <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-xs font-bold transition">Batal</button>
-                <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl text-xs font-bold shadow-lg shadow-amber-500/25 transition active:scale-95">Perbarui</button>
+            <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-black/10">
+                <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-void rounded-xl text-xs font-mono font-bold transition uppercase">BATAL</button>
+                <button type="submit" class="px-6 py-2.5 bg-void hover:bg-black text-white rounded-xl text-xs font-mono font-bold shadow-md transition uppercase inline-flex items-center gap-2">
+                    <i class="bi bi-save2 text-signal"></i> PERBARUI
+                </button>
             </div>
         </form>
     </div>

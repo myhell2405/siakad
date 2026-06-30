@@ -13,7 +13,7 @@ class SiswaAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Siswa::query();
+        $query = Siswa::with(['siswaKelas.kelasTahunAjaran.kelas', 'waliSiswa']);
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -23,9 +23,17 @@ class SiswaAdminController extends Controller
             });
         }
 
-        $siswa = $query->latest()->paginate(20)->withQueryString();
+        if ($request->filled('kelas')) {
+            $kelasId = $request->kelas;
+            $query->whereHas('siswaKelas.kelasTahunAjaran', function($q) use ($kelasId) {
+                $q->where('id_kelas', $kelasId);
+            });
+        }
 
-        return view('admin.siswa.index', compact('siswa'));
+        $siswa = $query->latest()->paginate(20)->withQueryString();
+        $listKelas = \App\Models\Kelas::orderBy('nama_kelas')->get();
+
+        return view('admin.siswa.index', compact('siswa', 'listKelas'));
     }
 
     /**
@@ -101,5 +109,53 @@ class SiswaAdminController extends Controller
         return redirect()
             ->route('admin.siswa.index')
             ->with('success', 'Data siswa berhasil dihapus');
+    }
+
+    /**
+     * Export data siswa ke file CSV (dapat dibuka di Excel)
+     */
+    public function export()
+    {
+        $siswa = Siswa::latest()->get();
+        $filename = "data_siswa_" . date('Y-m-d_H-i-s') . ".csv";
+
+        $headers = [
+            "Content-type"        => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['NO', 'NISN', 'NAMA SISWA', 'TEMPAT LAHIR', 'TANGGAL LAHIR', 'JENIS KELAMIN', 'AGAMA', 'STATUS KELUARGA', 'ANAK KE', 'ALAMAT', 'NO TELP', 'SEKOLAH ASAL', 'TANGGAL DITERIMA'];
+
+        $callback = function() use($siswa, $columns) {
+            $file = fopen('php://output', 'w');
+            // Tambahkan BOM untuk dukungan UTF-8 di Microsoft Excel
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fputcsv($file, $columns);
+
+            foreach ($siswa as $idx => $row) {
+                fputcsv($file, [
+                    $idx + 1,
+                    $row->nisn,
+                    $row->nama_siswa,
+                    $row->tempat_lahir,
+                    $row->tanggal_lahir ? $row->tanggal_lahir->format('Y-m-d') : '',
+                    ($row->jenis_kelamin == 'L' || $row->jenis_kelamin == 'Laki-laki') ? 'Laki-laki' : 'Perempuan',
+                    $row->agama,
+                    $row->status_keluarga,
+                    $row->anak_ke,
+                    $row->alamat_siswa,
+                    $row->telp_siswa,
+                    $row->sekolah_asal,
+                    $row->tanggal_diterima ? $row->tanggal_diterima->format('Y-m-d') : '',
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

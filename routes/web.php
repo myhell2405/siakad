@@ -42,12 +42,17 @@ Route::prefix('admin')
 
         // Terbuka untuk semua role yang sudah login
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard-statis', function () {
+            return view('admin.dashboard_statis');
+        })->name('dashboard.statis');
         Route::get('/profil', [AdminController::class, 'profil'])->name('profil');
         Route::put('/profil/password', [AdminController::class, 'updatePassword'])->name('profil.password');
+        Route::post('/unimpersonate', [AkunController::class, 'unimpersonate'])->name('unimpersonate');
 
         // Master Data (Khusus Admin / kelola_master)
         Route::middleware(['role:admin,kelola_master'])->group(function () {
             Route::resource('guru', GuruAdminController::class);
+            Route::get('siswa/export', [SiswaAdminController::class, 'export'])->name('siswa.export');
             Route::resource('siswa', SiswaAdminController::class);
             Route::resource('kelas', KelasController::class);
             Route::resource('mapel', MapelController::class);
@@ -124,6 +129,7 @@ Route::prefix('admin')
         Route::middleware(['role:admin,kelola_akun'])->group(function () {
             Route::post('/akun/generate-guru', [AkunController::class, 'generateGuru'])->name('akun.generate-guru');
             Route::post('/akun/generate-siswa', [AkunController::class, 'generateSiswa'])->name('akun.generate-siswa');
+            Route::post('/akun/{id}/impersonate', [AkunController::class, 'impersonate'])->name('akun.impersonate');
             Route::patch('/akun/{id}/reset-password', [AkunController::class, 'resetPassword'])->name('akun.reset-password');
             Route::resource('akun', AkunController::class)->except(['create', 'edit', 'show']);
 

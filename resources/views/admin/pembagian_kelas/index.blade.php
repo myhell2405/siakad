@@ -2,35 +2,26 @@
 
 @section('content')
 
-<div class="space-y-8 max-w-7xl mx-auto font-sans pb-16 text-slate-800">
+<div class="space-y-8 max-w-7xl mx-auto font-sans pb-16 text-gray-900">
 
-    {{-- ================================================
-         HEADER SECTION (Floating Elevation)
-         ================================================ --}}
-    <div class="bg-white rounded-[2.5rem] p-8 sm:p-10 shadow-[0_15px_50px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 ring-1 ring-slate-900/[0.03] transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]">
-        
-        {{-- Background Kinetic Glow Orb --}}
-        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-cyan-500/10 via-teal-500/10 to-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
-
+    {{-- HERO HEADER SECTION --}}
+    <div class="bg-white rounded-3xl p-8 sm:p-10 border border-black/10 shadow-xs relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
         <div class="flex items-center gap-5 relative z-10">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-600 to-teal-600 text-white flex items-center justify-center shadow-lg shadow-cyan-500/25 shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-3">
-                <i class="bi bi-grid-1x2-fill text-3xl"></i>
+            <div class="w-16 h-16 rounded-2xl bg-void text-white flex items-center justify-center border border-black shadow-md shrink-0">
+                <i class="bi bi-grid-1x2-fill text-3xl text-signal"></i>
             </div>
             <div class="space-y-1.5">
-                <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.15em] font-black bg-cyan-50/80 text-cyan-700 ring-1 ring-cyan-500/20 mb-1 shadow-2xs">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-600"></span>
-                    </span>
-                    <span>Manajemen Rombongan Belajar</span>
+                <div class="inline-flex items-center gap-2 rounded-md px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] font-mono font-bold bg-surface text-void border border-black/10 mb-1">
+                    <span class="w-2 h-2 rounded-full bg-signal animate-pulse inline-block"></span>
+                    <span>MANAJEMEN ROMBONGAN BELAJAR</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    {{ $title }}
+                <h1 class="text-3xl sm:text-4xl font-black text-void tracking-tight uppercase">
+                    {{ strtoupper($title) }}
                 </h1>
-                <p class="text-xs text-slate-400 font-bold flex items-center gap-2 pt-0.5">
-                    <span><i class="bi bi-building text-cyan-500"></i> SDN 01 Durian Gadang</span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-                    <span>Total Master Kelas: <strong class="text-slate-700">{{ $masterKelasCount }}</strong> Rombel</span>
+                <p class="text-xs text-gray-500 font-mono flex items-center gap-2 pt-0.5 uppercase">
+                    <span>SDN 01 DURIAN GADANG</span>
+                    <span>•</span>
+                    <span>TOTAL MASTER KELAS: <strong class="text-void font-black">{{ $masterKelasCount }}</strong> ROMBEL</span>
                 </p>
             </div>
         </div>
@@ -39,11 +30,9 @@
         <form action="{{ route('admin.pembagian-kelas.generate') }}" method="POST" class="relative z-10 w-full sm:w-auto" onsubmit="return confirm('Apakah Anda yakin ingin membuatkan kelas otomatis untuk semua master kelas yang belum terdaftar di TA Aktif ini?');">
             @csrf
             <button type="submit"
-                    class="group inline-flex items-center justify-center gap-3.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white font-bold text-xs shadow-lg shadow-cyan-500/25 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300 active:scale-[0.98] w-full">
-                <div class="w-7 h-7 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center transition-transform group-hover:rotate-90 duration-300">
-                    <i class="bi bi-magic text-xs font-black"></i>
-                </div>
-                <span class="tracking-wide">+ Generate Rombel TA Aktif</span>
+                    class="px-6 py-3.5 rounded-xl bg-void hover:bg-black text-white font-mono font-bold text-xs shadow-md transition w-full inline-flex items-center justify-center gap-3 uppercase tracking-wider">
+                <i class="bi bi-magic text-signal"></i>
+                <span>+ GENERATE ROMBEL TA AKTIF</span>
             </button>
         </form>
         @endif
@@ -51,122 +40,114 @@
 
     {{-- FLASH MESSAGES --}}
     @if(session('success'))
-        <div class="bg-gradient-to-r from-emerald-50 to-teal-50 ring-1 ring-emerald-500/30 text-emerald-900 p-5 rounded-3xl shadow-sm flex items-center gap-3.5 animate-fade-in font-bold text-xs">
-            <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-500/20">
-                <i class="bi bi-check-lg text-base font-black"></i>
+        <div class="bg-white border border-black/10 text-void p-5 rounded-3xl shadow-xs flex items-center gap-3.5 font-mono text-xs font-bold">
+            <div class="w-8 h-8 rounded-xl bg-void text-signal flex items-center justify-center shrink-0">
+                <i class="bi bi-check-lg text-base"></i>
             </div>
-            <span>{{ session('success') }}</span>
+            <span class="uppercase">{{ session('success') }}</span>
         </div>
     @endif
 
     @if(session('error'))
-        <div class="bg-gradient-to-r from-rose-50 to-red-50 ring-1 ring-rose-500/30 text-rose-900 p-5 rounded-3xl shadow-sm flex items-center gap-3.5 animate-fade-in font-bold text-xs">
-            <div class="w-8 h-8 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-rose-500/20">
-                <i class="bi bi-exclamation-triangle-fill text-base font-black"></i>
+        <div class="bg-red-50 border border-red-200 text-red-900 p-5 rounded-3xl shadow-xs flex items-center gap-3.5 font-mono text-xs font-bold">
+            <div class="w-8 h-8 rounded-xl bg-signal text-white flex items-center justify-center shrink-0">
+                <i class="bi bi-exclamation-triangle-fill text-base"></i>
             </div>
-            <span>{{ session('error') }}</span>
+            <span class="uppercase">{{ session('error') }}</span>
         </div>
     @endif
 
     @if(session('info'))
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 ring-1 ring-blue-500/30 text-blue-900 p-5 rounded-3xl shadow-sm flex items-center gap-3.5 animate-fade-in font-bold text-xs">
-            <div class="w-8 h-8 rounded-xl bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
-                <i class="bi bi-info-circle-fill text-base font-black"></i>
+        <div class="bg-gray-100 border border-black/10 text-void p-5 rounded-3xl shadow-xs flex items-center gap-3.5 font-mono text-xs font-bold">
+            <div class="w-8 h-8 rounded-xl bg-cobalt text-white flex items-center justify-center shrink-0">
+                <i class="bi bi-info-circle-fill text-base"></i>
             </div>
-            <span>{{ session('info') }}</span>
+            <span class="uppercase">{{ session('info') }}</span>
         </div>
     @endif
 
-    {{-- ================================================
-         STATUS TAHUN AJARAN BANNER
-         ================================================ --}}
+    {{-- STATUS TAHUN AJARAN BANNER --}}
     @if(!$taAktif)
-        <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-[2.5rem] p-8 sm:p-12 ring-1 ring-amber-500/30 shadow-md text-center space-y-5">
-            <div class="w-16 h-16 rounded-3xl bg-amber-500 text-white flex items-center justify-center text-3xl mx-auto shadow-lg shadow-amber-500/30 animate-bounce">
+        <div class="bg-white rounded-3xl p-8 sm:p-12 border border-black/10 shadow-xs text-center space-y-5 font-mono">
+            <div class="w-16 h-16 rounded-2xl bg-signal text-white flex items-center justify-center text-3xl mx-auto shadow-md">
                 <i class="bi bi-calendar-x-fill"></i>
             </div>
             <div class="max-w-md mx-auto space-y-2">
-                <h3 class="text-xl font-black text-amber-900">Belum Ada Tahun Ajaran Aktif</h3>
-                <p class="text-xs font-semibold text-amber-700 leading-relaxed">
+                <h3 class="text-xl font-black text-void uppercase font-sans">BELUM ADA TAHUN AJARAN AKTIF</h3>
+                <p class="text-xs font-bold text-gray-500 leading-relaxed uppercase">
                     Sistem pembagian kelas membutuhkan Tahun Ajaran yang berstatus aktif. Silakan aktifkan salah satu periode terlebih dahulu melalui menu kalender akademik.
                 </p>
             </div>
             <div class="pt-2">
                 <a href="{{ route('admin.tahun-ajaran.index') }}" 
-                   class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md shadow-amber-600/25 transition active:scale-95">
-                    <i class="bi bi-calendar-check font-black"></i> Ke Menu Tahun Ajaran
+                   class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-void hover:bg-black text-white font-bold text-xs transition uppercase">
+                    <i class="bi bi-calendar-check text-signal font-black"></i> KE MENU TAHUN AJARAN
                 </a>
             </div>
         </div>
     @else
-        <div class="bg-white rounded-[2rem] p-6 sm:p-8 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.04)] ring-1 ring-slate-900/[0.03] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-black/10 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 font-mono">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl font-black shrink-0">
-                    <i class="bi bi-calendar2-range"></i>
+                <div class="w-12 h-12 rounded-xl bg-void text-white flex items-center justify-center text-xl font-black shrink-0">
+                    <i class="bi bi-calendar2-range text-signal"></i>
                 </div>
                 <div>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Periode Akademik Aktif</span>
-                    <h2 class="text-lg font-black text-slate-900 flex items-center gap-2 pt-0.5">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">PERIODE AKADEMIK AKTIF</span>
+                    <h2 class="text-lg font-black text-void flex items-center gap-2 pt-0.5 font-sans uppercase">
                         <span>{{ $taAktif->tahun_mulai }} / {{ $taAktif->tahun_selesai }}</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-cyan-100 text-cyan-800 ring-1 ring-cyan-500/20">
-                            Semester {{ $taAktif->semester }}
+                        <span class="px-2.5 py-0.5 rounded-lg text-[10px] font-bold font-mono uppercase bg-gray-100 text-void border border-black/10">
+                            SEMESTER {{ $taAktif->semester }}
                         </span>
                     </h2>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                <div class="px-4 py-2.5 rounded-2xl bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500/30 flex items-center gap-2 font-black text-xs">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
-                    </span>
-                    <span>Status: Aktif</span>
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end text-xs">
+                <div class="px-4 py-2.5 rounded-xl bg-surface text-void border border-black/10 flex items-center gap-2 font-bold uppercase">
+                    <span class="w-2 h-2 rounded-full bg-signal inline-block"></span>
+                    <span>STATUS: AKTIF</span>
                 </div>
-                <div class="px-4 py-2.5 rounded-2xl bg-slate-100 text-slate-700 font-black text-xs flex items-center gap-2">
-                    <i class="bi bi-layers-fill text-slate-500"></i>
-                    <span>{{ $kelasTaList->count() }} Rombel Terbuat</span>
+                <div class="px-4 py-2.5 rounded-xl bg-gray-100 text-void font-bold flex items-center gap-2 uppercase">
+                    <i class="bi bi-layers-fill text-cobalt"></i>
+                    <span>{{ $kelasTaList->count() }} ROMBEL TERBUAT</span>
                 </div>
             </div>
         </div>
 
-        {{-- ================================================
-             TABLE SECTION
-             ================================================ --}}
-        <div class="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-[0_15px_50px_-15px_rgba(0,0,0,0.05)] ring-1 ring-slate-900/[0.03] overflow-hidden space-y-6">
-            
+        {{-- TABLE SECTION --}}
+        <div class="bg-white rounded-3xl p-8 border border-black/10 shadow-xs overflow-hidden space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
                 <div>
-                    <h3 class="text-base font-black text-slate-900">Daftar Penugasan Wali Kelas & Rombel</h3>
-                    <p class="text-xs text-slate-400 font-semibold">Ubah wali kelas langsung pada dropdown di bawah atau klik tombol Atur Siswa</p>
+                    <h3 class="text-base font-black text-void uppercase font-sans tracking-tight">DAFTAR PENUGASAN WALI KELAS & ROMBEL</h3>
+                    <p class="text-xs text-gray-400 font-mono uppercase">Ubah wali kelas langsung pada dropdown di bawah atau klik tombol Atur Siswa</p>
                 </div>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left font-mono">
                     <thead>
-                        <tr class="border-b border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                            <th class="pb-4 pl-4 w-16">No</th>
-                            <th class="pb-4">Rombongan Belajar</th>
-                            <th class="pb-4">Penugasan Wali Kelas</th>
-                            <th class="pb-4 text-center">Jumlah Siswa</th>
-                            <th class="pb-4 pr-4 text-right">Aksi Manajemen</th>
+                        <tr class="border-b border-gray-200 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                            <th class="py-3.5 pl-3 text-center w-16">NO</th>
+                            <th class="py-3.5">ROMBONGAN BELAJAR</th>
+                            <th class="py-3.5">PENUGASAN WALI KELAS</th>
+                            <th class="py-3.5 text-center">JUMLAH SISWA</th>
+                            <th class="py-3.5 pr-3 text-right">AKSI MANAJEMEN</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100 text-xs font-bold text-slate-700">
+                    <tbody class="divide-y divide-gray-100 text-xs font-bold text-gray-800">
                         @forelse($kelasTaList as $idx => $item)
-                        <tr class="hover:bg-slate-50/80 transition-colors group">
-                            <td class="py-4 pl-4 text-slate-400 font-semibold">
+                        <tr class="hover:bg-gray-50/80 transition-colors group">
+                            <td class="py-4 pl-3 text-center text-gray-400">
                                 {{ $idx + 1 }}
                             </td>
                             <td class="py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-50 to-teal-50 text-cyan-600 ring-1 ring-cyan-500/20 flex items-center justify-center font-black text-sm shrink-0 group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-void text-white flex items-center justify-center font-black text-sm shrink-0">
                                         {{ $item->kelas->tingkat_kelas ?? '-' }}
                                     </div>
                                     <div>
-                                        <span class="text-sm font-black text-slate-900 block">{{ $item->kelas->nama_kelas ?? '-' }}</span>
-                                        <span class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Tingkat Kelas {{ $item->kelas->tingkat_kelas ?? '-' }}</span>
+                                        <span class="text-base font-black text-void font-sans block uppercase">{{ $item->kelas->nama_kelas ?? '-' }}</span>
+                                        <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">TINGKAT KELAS {{ $item->kelas->tingkat_kelas ?? '-' }}</span>
                                     </div>
                                 </div>
                             </td>
@@ -176,44 +157,44 @@
                                     @csrf
                                     @method('PATCH')
                                     <select name="id_wali_kelas" onchange="this.form.submit()"
-                                            class="bg-slate-50 hover:bg-slate-100/80 focus:bg-white border border-slate-200/80 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition shadow-2xs max-w-xs">
+                                            class="bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-black/10 rounded-xl px-3.5 py-2 font-bold text-void focus:outline-none focus:border-void transition max-w-xs uppercase">
                                         @foreach($guruList as $g)
                                         <option value="{{ $g->id }}" {{ $item->id_wali_kelas == $g->id ? 'selected' : '' }}>
-                                            {{ $g->nama_lengkap }}
+                                            {{ strtoupper($g->nama_lengkap) }}
                                         </option>
                                         @endforeach
                                     </select>
                                     <noscript>
-                                        <button type="submit" class="px-3 py-2 bg-cyan-600 text-white rounded-xl text-xs font-bold">Simpan</button>
+                                        <button type="submit" class="px-3 py-2 bg-void text-white rounded-xl text-xs font-bold uppercase">SIMPAN</button>
                                     </noscript>
                                 </form>
                             </td>
                             <td class="py-4 text-center">
                                 @php $countSiswa = $item->siswaKelas->count(); @endphp
                                 @if($countSiswa > 0)
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500/30 font-black text-[11px]">
-                                        <i class="bi bi-people-fill text-[10px]"></i> {{ $countSiswa }} Siswa
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-100 border border-black/5 text-void font-bold text-[10px] uppercase">
+                                        <i class="bi bi-people-fill text-cobalt"></i> {{ $countSiswa }} SISWA
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-50 text-rose-600 ring-1 ring-rose-200 font-bold text-[11px]">
-                                        <i class="bi bi-exclamation-circle"></i> Kosong
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-red-50 text-red-700 border border-red-200 font-bold text-[10px] uppercase">
+                                        <i class="bi bi-exclamation-circle text-signal"></i> KOSONG
                                     </span>
                                 @endif
                             </td>
-                            <td class="py-4 pr-4 text-right">
+                            <td class="py-4 pr-3 text-right">
                                 <div class="inline-flex items-center justify-end gap-2">
                                     {{-- ATUR SISWA BUTTON --}}
                                     <a href="{{ route('admin.kelas-ta.detail', $item->id) }}"
-                                       class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white font-black text-xs shadow-md shadow-cyan-500/20 hover:shadow-lg transition-all active:scale-95"
+                                       class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-void hover:bg-black text-white font-bold text-xs shadow-sm transition uppercase"
                                        title="Atur Siswa Rombel">
-                                        <i class="bi bi-person-lines-fill"></i> Atur Siswa
+                                        <i class="bi bi-person-lines-fill text-signal"></i> ATUR SISWA
                                     </a>
 
                                     {{-- DELETE BUTTON --}}
                                     <form action="{{ route('admin.kelas-ta.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus pembagian rombel {{ $item->kelas->nama_kelas ?? '' }} dari TA Aktif ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-gradient-to-r hover:from-rose-600 hover:to-red-600 text-slate-700 hover:text-white flex items-center justify-center transition-all shadow-2xs hover:shadow-md hover:shadow-rose-500/20 active:scale-95" title="Hapus Rombel">
+                                        <button type="submit" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-signal hover:text-white text-void flex items-center justify-center transition" title="Hapus Rombel">
                                             <i class="bi bi-trash3-fill text-xs"></i>
                                         </button>
                                     </form>
@@ -222,14 +203,14 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="py-16 text-center text-slate-400 font-medium">
+                            <td colspan="5" class="py-16 text-center font-mono">
                                 <div class="flex flex-col items-center justify-center gap-4 max-w-sm mx-auto">
-                                    <div class="w-20 h-20 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-500 text-3xl shadow-inner animate-pulse">
+                                    <div class="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 text-2xl border border-black/5">
                                         <i class="bi bi-grid-1x2"></i>
                                     </div>
                                     <div class="space-y-1">
-                                        <h4 class="text-sm font-black text-slate-800">Rombongan Belajar Belum Terbuat</h4>
-                                        <p class="text-xs text-slate-400">Silakan klik tombol <strong class="text-cyan-600">+ Generate Rombel TA Aktif</strong> di atas untuk menyalin otomatis seluruh data master kelas.</p>
+                                        <h4 class="text-sm font-black text-void uppercase font-sans">ROMBONGAN BELAJAR BELUM TERBUAT</h4>
+                                        <p class="text-xs text-gray-400 uppercase">Silakan klik tombol <strong class="text-void font-bold">+ GENERATE ROMBEL TA AKTIF</strong> di atas untuk menyalin otomatis seluruh data master kelas.</p>
                                     </div>
                                 </div>
                             </td>

@@ -1,151 +1,141 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="space-y-10 font-sans text-slate-800 pb-16">
+<div class="space-y-8 max-w-7xl mx-auto font-sans pb-16 text-gray-900">
 
     @if(session('success'))
-        <div class="bg-emerald-50 ring-1 ring-emerald-500/20 text-emerald-900 p-4 rounded-2xl shadow-sm flex items-center justify-between text-xs font-bold animate-fade-in">
+        <div class="bg-emerald-50 border border-emerald-500/30 text-emerald-900 p-4 rounded-2xl shadow-xs flex items-center justify-between text-xs font-mono font-bold uppercase">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-md shadow-emerald-500/20">
-                    <i class="bi bi-check-lg text-sm font-black"></i>
-                </div>
+                <i class="bi bi-check-circle-fill text-emerald-600 text-base"></i>
                 <span>{{ session('success') }}</span>
             </div>
-            <button onclick="this.parentElement.remove()" class="w-7 h-7 rounded-lg hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition">
-                <i class="bi bi-x-lg text-xs font-bold"></i>
-            </button>
+            <button onclick="this.parentElement.remove()" class="w-7 h-7 rounded-lg hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition">✕</button>
         </div>
     @endif
 
-    {{-- ================================================
-         HERO HEADER SECTION
-         ================================================ --}}
-    <div class="bg-white rounded-[2.2rem] p-8 sm:p-10 shadow-[0_12px_45px_-10px_rgba(0,0,0,0.06)] relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6 ring-1 ring-slate-900/[0.03]">
-        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-purple-500/10 via-indigo-500/10 to-blue-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
-
+    {{-- HERO HEADER --}}
+    <div class="bg-white rounded-3xl p-8 sm:p-10 border border-black/10 shadow-xs relative flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div class="flex items-center gap-5 relative z-10">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-purple-500/25 shrink-0">
-                <i class="bi bi-sliders text-3xl"></i>
+            <div class="w-16 h-16 rounded-2xl bg-void text-white flex items-center justify-center border border-black shadow-md shrink-0">
+                <i class="bi bi-sliders text-3xl text-signal"></i>
             </div>
             <div class="space-y-1.5">
-                <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.15em] font-black bg-purple-50 text-purple-700 ring-1 ring-purple-500/20 shadow-2xs">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-600"></span>
-                    </span>
-                    <span>Access Control List</span>
+                <div class="inline-flex items-center gap-2 rounded-md px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] font-mono font-bold bg-surface text-void border border-black/10 mb-1">
+                    <span class="w-2 h-2 rounded-full bg-signal animate-pulse inline-block"></span>
+                    <span>ACCESS CONTROL LIST</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Matriks Role & Hak Akses (RBAC)</h1>
-                <p class="text-xs text-slate-400 font-bold flex items-center gap-2 pt-0.5">
-                    <span>Konfigurasi dinamis izin akses fitur dan menu untuk setiap peran pengguna</span>
+                <h1 class="text-3xl sm:text-4xl font-black text-void tracking-tight uppercase">MATRIKS ROLE & HAK AKSES (RBAC)</h1>
+                <p class="text-xs text-gray-500 font-mono uppercase">
+                    KONFIGURASI DINAMIS IZIN AKSES FITUR DAN MENU UNTUK SETIAP PERAN PENGGUNA
                 </p>
             </div>
         </div>
 
         <div class="relative z-10 shrink-0">
-            <a href="{{ route('admin.akun.index') }}" class="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-2xl text-xs font-bold transition-all shadow-md shadow-indigo-500/20 active:scale-95">
-                <i class="bi bi-people-fill"></i> Kelola Akun Pengguna
+            <a href="{{ route('admin.akun.index') }}" class="inline-flex items-center gap-2 px-6 py-3.5 bg-void hover:bg-black text-white rounded-xl text-xs font-mono font-bold transition-all shadow-md active:scale-95 uppercase">
+                <i class="bi bi-people-fill text-signal"></i> KELOLA AKUN PENGGUNA
             </a>
         </div>
     </div>
 
-    {{-- ================================================
-         INFO CARD
-         ================================================ --}}
-    <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl text-white p-8 shadow-xl ring-1 ring-white/10 relative overflow-hidden">
-        <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+    {{-- INFO CARD --}}
+    <div class="bg-void rounded-3xl text-white p-8 border border-black shadow-md relative overflow-hidden font-mono">
         <div class="flex items-start gap-5 relative z-10">
-            <div class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-xl shrink-0 ring-1 ring-white/20">
-                <i class="bi bi-shield-check text-indigo-300"></i>
+            <div class="w-12 h-12 rounded-2xl bg-surface text-void flex items-center justify-center text-xl shrink-0 border border-black/10">
+                <i class="bi bi-shield-check text-cobalt"></i>
             </div>
             <div class="space-y-1">
-                <h3 class="text-base font-black tracking-tight text-white">Dynamic Access Control List (ACL)</h3>
-                <p class="text-slate-300 text-xs font-medium leading-relaxed max-w-4xl">
-                    Sistem Informasi Akademik ini menerapkan kendali akses dinamis berbasis peran. Admin dapat menyesuaikan fitur apa saja yang dapat diakses oleh setiap Role secara mandiri dan *real-time* dengan mengeklik tombol <span class="text-indigo-300 font-bold">Edit Izin</span> pada tabel di bawah ini.
+                <h3 class="text-sm font-black tracking-tight text-white uppercase">DYNAMIC ACCESS CONTROL LIST (ACL)</h3>
+                <p class="text-gray-300 text-xs font-medium leading-relaxed max-w-4xl uppercase">
+                    Sistem Informasi Akademik ini menerapkan kendali akses dinamis berbasis peran. Admin dapat menyesuaikan fitur apa saja yang dapat diakses oleh setiap Role secara mandiri dan real-time dengan mengeklik tombol <span class="text-signal font-bold">EDIT IZIN</span> pada tabel di bawah ini.
                 </p>
             </div>
         </div>
     </div>
 
-    {{-- ================================================
-         TABLE CARD
-         ================================================ --}}
-    <div class="bg-white rounded-3xl shadow-[0_12px_45px_-10px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/[0.03] overflow-hidden">
+    {{-- TABLE CARD --}}
+    <div class="bg-white rounded-3xl border border-black/10 shadow-xs overflow-hidden">
+        <div class="p-6 border-b border-black/10 bg-gray-50 flex justify-between items-center">
+            <h3 class="font-black text-void text-sm uppercase flex items-center gap-2">
+                <i class="bi bi-lock-fill text-cobalt text-base"></i> DAFTAR ROLE TERDAFTAR
+            </h3>
+            <span class="text-[10px] font-mono font-bold uppercase bg-void text-white px-3 py-1 rounded">TOTAL: {{ $roles->count() }} ROLE</span>
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-slate-50/80 text-slate-400 text-[10px] font-black uppercase tracking-widest border-b border-slate-100">
-                        <th class="py-4 px-6 text-center w-16">ID</th>
-                        <th class="py-4 px-6">Kode Role</th>
-                        <th class="py-4 px-6">Deskripsi Peran</th>
-                        <th class="py-4 px-6">Daftar Hak Akses Fitur & Menu Terkonfigurasi</th>
-                        <th class="py-4 px-6 text-center w-28">Total Akun</th>
-                        <th class="py-4 px-6 text-center w-32">Aksi</th>
+                    <tr class="bg-surface text-void font-mono text-[10px] uppercase tracking-wider border-b border-black/10">
+                        <th class="py-4 pl-6 text-center w-16">ID</th>
+                        <th class="py-4 px-6">KODE ROLE</th>
+                        <th class="py-4 px-6">DESKRIPSI PERAN</th>
+                        <th class="py-4 px-6">DAFTAR HAK AKSES FITUR & MENU TERKONFIGURASI</th>
+                        <th class="py-4 px-6 text-center w-32">TOTAL AKUN</th>
+                        <th class="py-4 pr-6 text-center w-32">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 text-xs font-semibold">
+                <tbody class="divide-y divide-black/5 text-xs font-semibold text-gray-700">
                     @php
                         $allFeatures = [
-                            'kelola_master' => ['label' => 'Kelola Data Master', 'color' => 'bg-purple-50 text-purple-700 ring-1 ring-purple-500/20'],
-                            'kelola_akun' => ['label' => 'Kelola Akun & Role', 'color' => 'bg-purple-50 text-purple-700 ring-1 ring-purple-500/20'],
-                            'pembagian_kelas' => ['label' => 'Pembagian Kelas Aktif', 'color' => 'bg-blue-50 text-blue-700 ring-1 ring-blue-500/20'],
-                            'kelola_nilai_admin' => ['label' => 'Kelola Nilai Massal', 'color' => 'bg-blue-50 text-blue-700 ring-1 ring-blue-500/20'],
-                            'laporan_akademik' => ['label' => 'Laporan Akademik', 'color' => 'bg-blue-50 text-blue-700 ring-1 ring-blue-500/20'],
-                            'portal_guru' => ['label' => 'Akses Portal Guru', 'color' => 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-500/20'],
-                            'input_nilai_mapel' => ['label' => 'Input Nilai Mapel', 'color' => 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-500/20'],
-                            'validasi_nilai' => ['label' => 'Validasi Nilai Kelas', 'color' => 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-500/20'],
-                            'cetak_rapor_kelas' => ['label' => 'Cetak Rapor Siswa', 'color' => 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-500/20'],
-                            'portal_siswa' => ['label' => 'Akses Portal Siswa', 'color' => 'bg-teal-50 text-teal-700 ring-1 ring-teal-500/20'],
-                            'view_nilai_siswa' => ['label' => 'Lihat Transkrip Nilai', 'color' => 'bg-teal-50 text-teal-700 ring-1 ring-teal-500/20'],
-                            'cetak_rapor_siswa' => ['label' => 'Cetak Rapor Mandiri', 'color' => 'bg-teal-50 text-teal-700 ring-1 ring-teal-500/20'],
-                            'portal_kepsek' => ['label' => 'Akses Portal Kepsek', 'color' => 'bg-amber-50 text-amber-700 ring-1 ring-amber-500/20'],
-                            'monitoring_akademik' => ['label' => 'Monitoring Statistik', 'color' => 'bg-amber-50 text-amber-700 ring-1 ring-amber-500/20'],
-                            'view_laporan' => ['label' => 'Rekapitulasi Laporan', 'color' => 'bg-amber-50 text-amber-700 ring-1 ring-amber-500/20'],
+                            'kelola_master' => ['label' => 'KELOLA DATA MASTER', 'color' => 'bg-gray-100 text-void border border-black/10 font-mono font-bold'],
+                            'kelola_akun' => ['label' => 'KELOLA AKUN & ROLE', 'color' => 'bg-gray-100 text-void border border-black/10 font-mono font-bold'],
+                            'pembagian_kelas' => ['label' => 'PEMBAGIAN KELAS AKTIF', 'color' => 'bg-cobalt/10 text-cobalt border border-cobalt/20 font-mono font-bold'],
+                            'kelola_nilai_admin' => ['label' => 'KELOLA NILAI MASSAL', 'color' => 'bg-cobalt/10 text-cobalt border border-cobalt/20 font-mono font-bold'],
+                            'laporan_akademik' => ['label' => 'LAPORAN AKADEMIK', 'color' => 'bg-cobalt/10 text-cobalt border border-cobalt/20 font-mono font-bold'],
+                            'portal_guru' => ['label' => 'AKSES PORTAL GURU', 'color' => 'bg-surface text-void border border-black/10 font-mono font-bold'],
+                            'input_nilai_mapel' => ['label' => 'INPUT NILAI MAPEL', 'color' => 'bg-surface text-void border border-black/10 font-mono font-bold'],
+                            'validasi_nilai' => ['label' => 'VALIDASI NILAI KELAS', 'color' => 'bg-surface text-void border border-black/10 font-mono font-bold'],
+                            'cetak_rapor_kelas' => ['label' => 'CETAK RAPOR SISWA', 'color' => 'bg-surface text-void border border-black/10 font-mono font-bold'],
+                            'portal_siswa' => ['label' => 'AKSES PORTAL SISWA', 'color' => 'bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono font-bold'],
+                            'view_nilai_siswa' => ['label' => 'LIHAT TRANSKRIP NILAI', 'color' => 'bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono font-bold'],
+                            'cetak_rapor_siswa' => ['label' => 'CETAK RAPOR MANDIRI', 'color' => 'bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono font-bold'],
+                            'portal_kepsek' => ['label' => 'AKSES PORTAL KEPSEK', 'color' => 'bg-signal/20 text-void border border-black/10 font-mono font-bold'],
+                            'monitoring_akademik' => ['label' => 'MONITORING STATISTIK', 'color' => 'bg-signal/20 text-void border border-black/10 font-mono font-bold'],
+                            'view_laporan' => ['label' => 'REKAPITULASI LAPORAN', 'color' => 'bg-signal/20 text-void border border-black/10 font-mono font-bold'],
                         ];
                     @endphp
                     @foreach($roles as $role)
                         @php
                             $badgeColor = match($role->nama_role) {
-                                'admin' => 'bg-purple-50 text-purple-700 ring-1 ring-purple-500/20 font-black',
-                                'guru' => 'bg-blue-50 text-blue-700 ring-1 ring-blue-500/20 font-black',
-                                'wali_kelas' => 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-500/20 font-black',
-                                'kepala_sekolah' => 'bg-amber-50 text-amber-700 ring-1 ring-amber-500/20 font-black',
-                                'siswa' => 'bg-teal-50 text-teal-700 ring-1 ring-teal-500/20 font-black',
-                                default => 'bg-slate-100 text-slate-700 font-bold'
+                                'admin' => 'bg-void text-signal border border-black font-mono font-bold',
+                                'guru' => 'bg-gray-100 text-void border border-black/10 font-mono font-bold',
+                                'wali_kelas' => 'bg-cobalt/10 text-cobalt border border-cobalt/20 font-mono font-bold',
+                                'kepala_sekolah' => 'bg-signal/20 text-void border border-black/10 font-mono font-bold',
+                                'siswa' => 'bg-surface text-void border border-black/10 font-mono font-bold',
+                                default => 'bg-gray-100 text-gray-700 font-mono font-bold'
                             };
                             $perms = is_array($role->permissions) ? $role->permissions : [];
                         @endphp
-                        <tr class="hover:bg-slate-50/80 transition duration-150">
-                            <td class="py-5 px-6 text-center font-bold text-slate-400">{{ $role->id_role }}</td>
+                        <tr class="hover:bg-gray-50/80 transition duration-150">
+                            <td class="py-5 pl-6 text-center font-mono font-bold text-gray-400">{{ $role->id_role }}</td>
                             <td class="py-5 px-6 whitespace-nowrap">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] {{ $badgeColor }}">
-                                    {{ $role->nama_role }}
+                                <span class="inline-flex items-center px-3 py-1 rounded text-[10px] uppercase {{ $badgeColor }}">
+                                    {{ strtoupper($role->nama_role) }}
                                 </span>
                             </td>
-                            <td class="py-5 px-6 text-slate-700 font-bold whitespace-nowrap">{{ $role->deskripsi }}</td>
+                            <td class="py-5 px-6 text-void font-bold whitespace-nowrap uppercase">{{ $role->deskripsi }}</td>
                             <td class="py-5 px-6">
                                 <div class="flex flex-wrap gap-1.5">
                                     @forelse($perms as $p)
                                         @if(isset($allFeatures[$p]))
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold {{ $allFeatures[$p]['color'] }}">
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[10px] uppercase {{ $allFeatures[$p]['color'] }}">
                                                 <i class="bi bi-check2 text-xs font-black"></i> {{ $allFeatures[$p]['label'] }}
                                             </span>
                                         @else
-                                            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700">{{ $p }}</span>
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-gray-100 text-gray-700 uppercase">{{ $p }}</span>
                                         @endif
                                     @empty
-                                        <span class="text-slate-400 italic text-xs font-medium">Belum ada hak akses dikonfigurasi</span>
+                                        <span class="text-gray-400 italic text-xs font-mono uppercase">BELUM ADA HAK AKSES DIKONFIGURASI</span>
                                     @endforelse
                                 </div>
                             </td>
-                            <td class="py-5 px-6 text-center font-black text-slate-900 text-sm whitespace-nowrap">
-                                <span class="px-3 py-1 bg-slate-100 rounded-xl">{{ $role->users_count }} <span class="text-[11px] font-semibold text-slate-400">akun</span></span>
+                            <td class="py-5 px-6 text-center font-mono font-black text-void text-sm whitespace-nowrap">
+                                <span class="px-3 py-1 bg-gray-100 rounded border border-black/10">{{ $role->users_count }} <span class="text-[10px] font-mono text-gray-500 uppercase">AKUN</span></span>
                             </td>
-                            <td class="py-5 px-6 text-center whitespace-nowrap">
+                            <td class="py-5 pr-6 text-center whitespace-nowrap">
                                 <button type="button" 
                                     onclick="openEditRoleModal({{ $role->id_role }}, '{{ strtoupper($role->nama_role) }}', {{ json_encode($perms) }})"
-                                    class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-50 hover:bg-indigo-600 text-indigo-600 hover:text-white rounded-xl font-bold text-xs transition shadow-2xs active:scale-95">
-                                    <i class="bi bi-gear-fill"></i> Edit Izin
+                                    class="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-100 hover:bg-void text-void hover:text-white border border-black/10 rounded-xl font-mono font-bold text-xs transition shadow-2xs active:scale-95 uppercase">
+                                    <i class="bi bi-gear-fill text-signal"></i> EDIT IZIN
                                 </button>
                             </td>
                         </tr>
@@ -159,120 +149,120 @@
 <!-- Modal Edit Izin Akses -->
 <div id="editRoleModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 transition-opacity bg-slate-900/60 backdrop-blur-sm" onclick="closeEditRoleModal()"></div>
+        <div class="fixed inset-0 transition-opacity bg-black/60 backdrop-blur-xs" onclick="closeEditRoleModal()"></div>
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
         
-        <div class="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full ring-1 ring-slate-900/10 animate-scale-up">
+        <div class="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full border border-black">
             <form id="editRoleForm" method="POST" action="">
                 @csrf
                 @method('PUT')
                 
                 <!-- Modal Header -->
-                <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 px-8 py-6 text-white flex justify-between items-center">
+                <div class="bg-void px-8 py-6 text-white flex justify-between items-center border-b border-black">
                     <div class="space-y-1">
-                        <div class="inline-flex items-center gap-2 rounded-full px-2.5 py-0.5 text-[10px] uppercase tracking-widest font-black bg-indigo-500/20 text-indigo-300 ring-1 ring-indigo-400/30">
+                        <div class="inline-flex items-center gap-2 rounded px-2 py-0.5 text-[10px] uppercase tracking-widest font-mono font-bold bg-surface text-void border border-black/10">
                             <span>RBAC CONFIG</span>
                         </div>
-                        <h3 class="text-base font-black">Konfigurasi Hak Akses Role: <span id="modalRoleName" class="text-indigo-300 font-extrabold"></span></h3>
+                        <h3 class="text-base font-black uppercase">KONFIGURASI HAK AKSES ROLE: <span id="modalRoleName" class="text-signal font-extrabold"></span></h3>
                     </div>
-                    <button type="button" onclick="closeEditRoleModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold transition">&times;</button>
+                    <button type="button" onclick="closeEditRoleModal()" class="w-8 h-8 rounded-xl bg-surface/20 hover:bg-surface/30 text-white flex items-center justify-center font-bold transition">&times;</button>
                 </div>
 
                 <!-- Modal Body -->
-                <div class="p-8 space-y-6 max-h-[65vh] overflow-y-auto">
+                <div class="p-6 sm:p-8 space-y-6 max-h-[65vh] overflow-y-auto font-mono">
                     
                     <!-- Group 1: Administrasi & Master -->
-                    <div class="bg-slate-50/80 p-5 rounded-2xl ring-1 ring-slate-200/60">
-                        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider border-b border-slate-200/80 pb-3 mb-4 flex items-center gap-2.5">
-                            <i class="bi bi-database-fill text-purple-600 text-sm"></i> Kelompok Administrasi & Data Master
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-black/10">
+                        <h4 class="text-xs font-black text-void uppercase tracking-wider border-b border-black/10 pb-3 mb-4 flex items-center gap-2.5">
+                            <i class="bi bi-database-fill text-signal text-base"></i> KELOMPOK ADMINISTRASI & DATA MASTER
                         </h4>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="kelola_master" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Kelola Data Master Sekolah</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="kelola_master" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">KELOLA DATA MASTER SEKOLAH</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="kelola_akun" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Kelola Akun & Role RBAC</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="kelola_akun" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">KELOLA AKUN & ROLE RBAC</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="pembagian_kelas" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Pembagian Kelas Aktif</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="pembagian_kelas" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">PEMBAGIAN KELAS AKTIF</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="kelola_nilai_admin" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Kelola Nilai Massal (Admin)</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="kelola_nilai_admin" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">KELOLA NILAI MASSAL (ADMIN)</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="laporan_akademik" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Laporan Akademik Sekolah</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="laporan_akademik" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">LAPORAN AKADEMIK SEKOLAH</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Group 2: Portal Guru & Wali Kelas -->
-                    <div class="bg-slate-50/80 p-5 rounded-2xl ring-1 ring-slate-200/60">
-                        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider border-b border-slate-200/80 pb-3 mb-4 flex items-center gap-2.5">
-                            <i class="bi bi-person-badge-fill text-indigo-600 text-sm"></i> Kelompok Portal Guru & Wali Kelas
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-black/10">
+                        <h4 class="text-xs font-black text-void uppercase tracking-wider border-b border-black/10 pb-3 mb-4 flex items-center gap-2.5">
+                            <i class="bi bi-person-badge-fill text-cobalt text-base"></i> KELOMPOK PORTAL GURU & WALI KELAS
                         </h4>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="portal_guru" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Akses Portal Dashboard Guru</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="portal_guru" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">AKSES PORTAL DASHBOARD GURU</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="input_nilai_mapel" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Input & Edit Nilai Mapel</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="input_nilai_mapel" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">INPUT & EDIT NILAI MAPEL</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="validasi_nilai" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Validasi Nilai (Wali Kelas)</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="validasi_nilai" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">VALIDASI NILAI (WALI KELAS)</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="cetak_rapor_kelas" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Cetak Rapor PDF Siswa</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="cetak_rapor_kelas" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">CETAK RAPOR PDF SISWA</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Group 3: Portal Siswa & Orang Tua -->
-                    <div class="bg-slate-50/80 p-5 rounded-2xl ring-1 ring-slate-200/60">
-                        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider border-b border-slate-200/80 pb-3 mb-4 flex items-center gap-2.5">
-                            <i class="bi bi-mortarboard-fill text-teal-600 text-sm"></i> Kelompok Portal Siswa & Orang Tua
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-black/10">
+                        <h4 class="text-xs font-black text-void uppercase tracking-wider border-b border-black/10 pb-3 mb-4 flex items-center gap-2.5">
+                            <i class="bi bi-mortarboard-fill text-emerald-700 text-base"></i> KELOMPOK PORTAL SISWA & ORANG TUA
                         </h4>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="portal_siswa" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Akses Portal Dashboard Siswa</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="portal_siswa" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">AKSES PORTAL DASHBOARD SISWA</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="view_nilai_siswa" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Lihat Transkrip Nilai Siswa</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="view_nilai_siswa" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">LIHAT TRANSKRIP NILAI SISWA</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="cetak_rapor_siswa" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Cetak Rapor Mandiri</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="cetak_rapor_siswa" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">CETAK RAPOR MANDIRI</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Group 4: Portal Kepala Sekolah -->
-                    <div class="bg-slate-50/80 p-5 rounded-2xl ring-1 ring-slate-200/60">
-                        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider border-b border-slate-200/80 pb-3 mb-4 flex items-center gap-2.5">
-                            <i class="bi bi-building-fill text-amber-600 text-sm"></i> Kelompok Portal Kepala Sekolah
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-black/10">
+                        <h4 class="text-xs font-black text-void uppercase tracking-wider border-b border-black/10 pb-3 mb-4 flex items-center gap-2.5">
+                            <i class="bi bi-building-fill text-signal text-base"></i> KELOMPOK PORTAL KEPALA SEKOLAH
                         </h4>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="portal_kepsek" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Akses Dashboard Kepala Sekolah</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="portal_kepsek" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">AKSES DASHBOARD KEPALA SEKOLAH</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="monitoring_akademik" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Monitoring Statistik & Grafik</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="monitoring_akademik" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">MONITORING STATISTIK & GRAFIK</span>
                             </label>
-                            <label class="flex items-center gap-3 text-xs font-bold text-slate-700 cursor-pointer bg-white p-3 rounded-xl ring-1 ring-slate-200/60 hover:ring-indigo-500/40 transition">
-                                <input type="checkbox" name="permissions[]" value="view_laporan" class="perm-cb rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-                                <span>Lihat Rekapitulasi Laporan</span>
+                            <label class="flex items-center gap-3 text-xs font-bold text-void cursor-pointer bg-white p-3.5 rounded-xl border border-black/10 hover:border-black transition">
+                                <input type="checkbox" name="permissions[]" value="view_laporan" class="perm-cb rounded border-black/20 text-void focus:ring-void w-4 h-4">
+                                <span class="uppercase">LIHAT REKAPITULASI LAPORAN</span>
                             </label>
                         </div>
                     </div>
@@ -280,16 +270,16 @@
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="bg-slate-50/80 px-8 py-5 flex items-center justify-between border-t border-slate-100">
-                    <button type="button" onclick="selectAllPermissions()" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 underline transition">
-                        Centang Semua Fitur
+                <div class="bg-gray-50 px-8 py-5 flex items-center justify-between border-t border-black/10 font-mono">
+                    <button type="button" onclick="selectAllPermissions()" class="text-xs font-bold text-cobalt hover:text-void underline transition uppercase">
+                        CENTANG SEMUA FITUR
                     </button>
                     <div class="flex gap-3">
-                        <button type="button" onclick="closeEditRoleModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-2xl transition">
-                            Batal
+                        <button type="button" onclick="closeEditRoleModal()" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-void text-xs font-bold rounded-xl transition uppercase">
+                            BATAL
                         </button>
-                        <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-xs font-bold rounded-2xl shadow-lg shadow-indigo-500/25 transition active:scale-95">
-                            <i class="bi bi-save mr-1"></i> Simpan Konfigurasi
+                        <button type="submit" class="px-6 py-2.5 bg-void hover:bg-black text-white text-xs font-bold rounded-xl shadow-md transition active:scale-95 uppercase inline-flex items-center gap-2">
+                            <i class="bi bi-save text-signal"></i> SIMPAN KONFIGURASI
                         </button>
                     </div>
                 </div>

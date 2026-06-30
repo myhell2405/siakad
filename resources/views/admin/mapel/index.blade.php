@@ -2,108 +2,85 @@
 
 @section('content')
 
-<div class="space-y-8 max-w-7xl mx-auto font-sans pb-16 text-slate-800">
+<div class="space-y-8 font-sans text-gray-900 pb-16">
 
-    {{-- ================================================
-         HEADER SECTION (Floating Elevation)
-         ================================================ --}}
-    <div class="bg-white rounded-[2.5rem] p-8 sm:p-10 shadow-[0_15px_50px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 ring-1 ring-slate-900/[0.03] transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]">
-        
-        {{-- Background Kinetic Glow Orb --}}
-        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
-
+    {{-- HERO HEADER SECTION --}}
+    <div class="bg-white rounded-3xl p-8 sm:p-10 border border-black/10 shadow-xs relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
         <div class="flex items-center gap-5 relative z-10">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/25 shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-3">
-                <i class="bi bi-book-half text-3xl"></i>
+            <div class="w-16 h-16 rounded-2xl bg-void text-white flex items-center justify-center border border-black shadow-md shrink-0">
+                <i class="bi bi-book-half text-3xl text-signal"></i>
             </div>
             <div class="space-y-1.5">
-                <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.15em] font-black bg-blue-50/80 text-blue-700 ring-1 ring-blue-500/20 mb-1 shadow-2xs">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
-                    </span>
-                    <span>Kurikulum & Akademik</span>
+                <div class="inline-flex items-center gap-2 rounded-md px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] font-mono font-bold bg-surface text-void border border-black/10 mb-1">
+                    <span class="w-2 h-2 rounded-full bg-signal animate-pulse inline-block"></span>
+                    <span>KURIKULUM & AKADEMIK</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    {{ $title ?? 'Data Mata Pelajaran' }}
+                <h1 class="text-3xl sm:text-4xl font-black text-void tracking-tight uppercase">
+                    {{ strtoupper($title ?? 'DATA MATA PELAJARAN') }}
                 </h1>
-                <p class="text-xs text-slate-400 font-bold flex items-center gap-2 pt-0.5">
-                    <span><i class="bi bi-building text-blue-500"></i> SDN 01 Durian Gadang</span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-                    <span>Total <strong class="text-slate-700">{{ $mapel->total() }}</strong> Mapel Terdaftar</span>
+                <p class="text-xs text-gray-500 font-mono flex items-center gap-2 pt-0.5 uppercase">
+                    <span>SDN 01 DURIAN GADANG</span>
+                    <span>•</span>
+                    <span>TOTAL <strong class="text-void font-black">{{ $mapel->total() }}</strong> MAPEL TERDAFTAR</span>
                 </p>
             </div>
         </div>
 
         <a href="{{ route('admin.mapel.create') }}"
-           class="group relative z-10 inline-flex items-center gap-4 pl-6 pr-2 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 active:scale-[0.98] w-full sm:w-auto justify-between sm:justify-start">
-            <span class="tracking-wide">Tambah Mapel Baru</span>
-            <div class="w-8 h-8 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                <i class="bi bi-plus-lg text-sm font-black"></i>
-            </div>
+           class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-void hover:bg-black text-white font-mono font-bold text-xs transition shadow-md uppercase">
+            <span>TAMBAH MAPEL BARU</span>
+            <i class="bi bi-plus-lg text-signal font-bold text-sm"></i>
         </a>
     </div>
 
-    {{-- ================================================
-         SEARCH & FILTER BAR (Floating Elevation Card)
-         ================================================ --}}
-    <div class="bg-white rounded-[2rem] p-4 sm:p-6 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.04)] ring-1 ring-slate-900/[0.03]">
-        <form action="{{ route('admin.mapel.index') }}" method="GET" class="flex flex-col sm:flex-row items-center justify-between gap-4">
+    {{-- SEARCH & FILTER BAR --}}
+    <div class="bg-white rounded-3xl p-6 border border-black/10 shadow-xs">
+        <form action="{{ route('admin.mapel.index') }}" method="GET" class="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
             <div class="relative w-full sm:w-96">
+                <div class="absolute left-4 text-gray-400">
+                    <i class="bi bi-search"></i>
+                </div>
                 <input type="text" name="search" value="{{ request('search') }}"
                        placeholder="Cari nama mata pelajaran..."
-                       class="w-full pl-11 pr-4 py-3 bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200/80 rounded-2xl text-xs font-bold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-500/15 focus:border-blue-600 transition-all shadow-inner">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                    <i class="bi bi-search text-sm"></i>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                       class="w-full bg-gray-50 hover:bg-gray-100/70 border border-black/10 rounded-xl pl-11 pr-24 py-3 text-xs font-mono font-bold text-void placeholder:text-gray-400 focus:bg-white focus:outline-none focus:border-void transition-all">
                 @if(request('search'))
-                    <a href="{{ route('admin.mapel.index') }}"
-                       class="px-5 py-3 rounded-2xl bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold transition flex items-center gap-2">
-                        <i class="bi bi-x-circle-fill"></i> Reset
+                    <a href="{{ route('admin.mapel.index') }}" class="absolute right-3 bg-gray-200 hover:bg-signal hover:text-white transition px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase">
+                        Reset
                     </a>
                 @endif
-                <button type="submit"
-                        class="px-7 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-2xl transition shadow-md active:scale-95 w-full sm:w-auto flex items-center justify-center gap-2">
-                    <i class="bi bi-filter"></i> Filter Cari
-                </button>
             </div>
         </form>
     </div>
 
-    {{-- ================================================
-         TABLE SECTION
-         ================================================ --}}
-    <div class="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-[0_15px_50px_-15px_rgba(0,0,0,0.05)] ring-1 ring-slate-900/[0.03] overflow-hidden">
+    {{-- TABLE SECTION --}}
+    <div class="bg-white rounded-3xl p-8 border border-black/10 shadow-xs overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+            <table class="w-full text-left font-mono">
                 <thead>
-                    <tr class="border-b border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                        <th class="pb-4 pl-4 w-16">No</th>
-                        <th class="pb-4">Nama Mata Pelajaran</th>
-                        <th class="pb-4 text-center">KKM</th>
-                        <th class="pb-4 text-center">Guru Pengampu</th>
-                        <th class="pb-4 pr-4 text-right">Aksi</th>
+                    <tr class="border-b border-gray-200 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                        <th class="py-3.5 pl-3 text-center w-16">NO</th>
+                        <th class="py-3.5">NAMA MATA PELAJARAN</th>
+                        <th class="py-3.5 text-center">KKM</th>
+                        <th class="py-3.5 text-center">GURU PENGAMPU</th>
+                        <th class="py-3.5 pr-3 text-right">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 text-xs font-bold text-slate-700">
+                <tbody class="divide-y divide-gray-100 text-xs font-bold text-gray-800">
                     @forelse($mapel as $item)
-                    <tr class="hover:bg-slate-50/80 transition-colors group">
-                        <td class="py-4 pl-4 text-slate-400 font-semibold">
+                    <tr class="hover:bg-gray-50/80 transition-colors group">
+                        <td class="py-4 pl-3 text-center text-gray-400">
                             {{ $mapel->firstItem() + $loop->index }}
                         </td>
                         <td class="py-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-sm shrink-0 group-hover:scale-110 transition-transform">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-9 h-9 rounded-xl bg-void text-white flex items-center justify-center font-black text-sm shrink-0">
                                     <i class="bi bi-book"></i>
                                 </div>
-                                <span class="text-sm font-black text-slate-900">{{ $item->nama_mapel }}</span>
+                                <span class="font-black text-void group-hover:text-cobalt transition-colors text-base font-sans uppercase">{{ $item->nama_mapel }}</span>
                             </div>
                         </td>
                         <td class="py-4 text-center">
-                            <span class="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-black bg-slate-100 text-slate-800 ring-1 ring-slate-200">
+                            <span class="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-gray-100 border border-black/5 text-xs font-bold text-void">
                                 {{ $item->kkm }}
                             </span>
                         </td>
@@ -111,41 +88,36 @@
                             @if($item->guru && $item->guru->count() > 0)
                                 <div class="flex flex-wrap gap-1.5 justify-center">
                                     @foreach($item->guru->take(2) as $g)
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 font-bold text-[11px] ring-1 ring-blue-500/20">
-                                            <i class="bi bi-person-check-fill text-[10px]"></i> {{ $g->nama_lengkap }}
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-100 text-void font-bold text-[10px] uppercase">
+                                            <i class="bi bi-person-check-fill text-cobalt"></i> {{ strtoupper($g->nama_lengkap) }}
                                         </span>
                                     @endforeach
                                     @if($item->guru->count() > 2)
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-slate-100 text-slate-600 font-black text-[10px] ring-1 ring-slate-200" title="{{ $item->guru->slice(2)->pluck('nama_lengkap')->implode(', ') }}">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-lg bg-void text-white font-bold text-[10px]" title="{{ $item->guru->slice(2)->pluck('nama_lengkap')->implode(', ') }}">
                                             +{{ $item->guru->count() - 2 }}
                                         </span>
                                     @endif
                                 </div>
                             @else
-                                <span class="text-slate-400 italic font-medium text-xs">Belum ada pengampu</span>
+                                <span class="text-gray-400 italic font-medium text-[11px] uppercase">BELUM ADA PENGAMPU</span>
                             @endif
                         </td>
-                        <td class="py-4 pr-4 text-right">
+                        <td class="py-4 pr-3 text-right">
                             <div class="inline-flex items-center justify-end gap-1.5">
-                                {{-- ATUR GURU BUTTON --}}
                                 <a href="{{ route('admin.mapel.guru.index', $item->id_mapel) }}"
-                                   class="w-8 h-8 rounded-xl bg-indigo-50 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 text-indigo-600 hover:text-white flex items-center justify-center transition-all shadow-2xs hover:shadow-md hover:shadow-indigo-500/20 active:scale-95"
+                                   class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-void text-void hover:text-white flex items-center justify-center transition"
                                    title="Atur Guru Pengampu">
                                     <i class="bi bi-people-fill text-xs"></i>
                                 </a>
-
-                                {{-- EDIT BUTTON --}}
                                 <a href="{{ route('admin.mapel.edit', $item->id_mapel) }}"
-                                   class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-600 text-slate-700 hover:text-white flex items-center justify-center transition-all shadow-2xs hover:shadow-md hover:shadow-amber-500/20 active:scale-95"
+                                   class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-amber-500 hover:text-white text-void flex items-center justify-center transition"
                                    title="Edit Mapel">
                                     <i class="bi bi-pencil-fill text-xs"></i>
                                 </a>
-
-                                {{-- DELETE BUTTON --}}
                                 <form action="{{ route('admin.mapel.destroy', $item->id_mapel) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus mata pelajaran ini?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-gradient-to-r hover:from-rose-600 hover:to-red-600 text-slate-700 hover:text-white flex items-center justify-center transition-all shadow-2xs hover:shadow-md hover:shadow-rose-500/20 active:scale-95" title="Hapus Mapel">
+                                    <button type="submit" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-signal hover:text-white text-void flex items-center justify-center transition" title="Hapus Mapel">
                                         <i class="bi bi-trash3-fill text-xs"></i>
                                     </button>
                                 </form>
@@ -154,12 +126,12 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="py-12 text-center text-slate-400 font-medium">
-                            <div class="flex flex-col items-center justify-center gap-3">
-                                <div class="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 text-2xl">
-                                    <i class="bi bi-book"></i>
+                        <td colspan="5" class="py-16 text-center">
+                            <div class="flex flex-col items-center justify-center">
+                                <div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-400 flex items-center justify-center mb-3">
+                                    <i class="bi bi-book text-2xl"></i>
                                 </div>
-                                <span>Data mata pelajaran belum tersedia atau tidak ditemukan.</span>
+                                <h4 class="font-bold text-void text-sm uppercase">BELUM ADA DATA MATA PELAJARAN</h4>
                             </div>
                         </td>
                     </tr>
@@ -169,9 +141,9 @@
         </div>
 
         {{-- PAGINATION --}}
-        <div class="mt-8 pt-6 border-t border-slate-100">
-            <x-pagination :paginator="$mapel" />
-        </div>
+        @if($mapel->hasPages())
+            {{ $mapel->links('components.pagination') }}
+        @endif
     </div>
 
 </div>

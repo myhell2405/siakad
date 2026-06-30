@@ -191,4 +191,80 @@ class AkunController extends Controller
 
         return redirect()->route('admin.akun.index')->with('success', "Berhasil me-generate {$created} akun login untuk Siswa (Password default: 1234)!");
     }
+
+    /**
+     * Login menggunakan akun pengguna lain (Impersonate).
+     */
+    public function impersonate($id)
+    {
+        // Simpan id_user admin asli jika belum ada dalam sesi impersonasi
+        if (!session()->has('impersonator_id')) {
+            session(['impersonator_id' => session('id_user')]);
+        }
+
+        $user = TbUser::with('role')->findOrFail($id);
+
+        if ($user->status !== 'aktif') {
+            return back()->with('error', 'Akun yang dipilih sedang nonaktif!');
+        }
+
+        $roleName = $user->role->nama_role;
+        $permissions = is_string($user->role->permissions) ? json_decode($user->role->permissions, true) : ($user->role->permissions ?? []);
+
+        if (in_array($roleName, ['guru', 'wali_kelas']) && $user->ref_id) {
+            $isWaliKelas = \App\Models\KelasTahunAjaran::where('id_wali_kelas', $user->ref_id)->exists();
+            if ($isWaliKelas) {
+                $roleName = 'wali_kelas';
+                $walasRole = \App\Models\TbRole::where('nama_role', 'wali_kelas')->first();
+                if ($walasRole) {
+                    $walasPerms = is_string($walasRole->permissions) ? json_decode($walasRole->permissions, true) : ($walasRole->permissions ?? []);
+                    $permissions = array_values(array_unique(array_merge($permissions, $walasPerms)));
+                }
+            } else {
+                $roleName = 'guru';
+                $guruRole = \App\Models\TbRole::where('nama_role', 'guru')->first();
+                if ($guruRole) {
+                    $permissions = is_string($guruRole->permissions) ? json_decode($guruRole->permissions, true) : ($guruRole->permissions ?? []);
+                }
+            }
+        }
+
+        session([
+            'id_user' => $user->id_user,
+            'username' => $user->username,
+            'role' => $roleName,
+            'ref_id' => $user->ref_id,
+            'permissions' => $permissions,
+        ]);
+
+        return redirect('/admin/dashboard')->with('success', "Berhasil login sebagai akun: {$user->username} ({$roleName})");
+    }
+
+    /**
+     * Kembali ke akun asli admin (Unimpersonate).
+     */
+    public function unimpersonate()
+    {
+        if (!session()->has('impersonator_id')) {
+            return redirect('/admin/dashboard');
+        }
+
+        $originalId = session('impersonator_id');
+        $admin = TbUser::with('role')->findOrFail($originalId);
+
+        $roleName = $admin->role->nama_role;
+        $permissions = is_string($admin->role->permissions) ? json_decode($admin->role->permissions, true) : ($admin->role->permissions ?? []);
+
+        session([
+            'id_user' => $admin->id_user,
+            'username' => $admin->username,
+            'role' => $roleName,
+            'ref_id' => $admin->ref_id,
+            'permissions' => $permissions,
+        ]);
+
+        session()->forget('impersonator_id');
+
+        return redirect('/admin/akun')->with('success', "Berhasil kembali ke akun asli administrator: {$admin->username}");
+    }
 }
