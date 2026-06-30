@@ -37,8 +37,8 @@ class GuruAdminController extends Controller
      ========================= */
     public function create()
     {
-        return view('admin.guru.form', [
-            'title' => 'Tambah Guru',
+        return view('admin.guru.create', [
+            'title' => 'Tambah Data Pendidik Baru',
         ]);
     }
 
@@ -83,8 +83,8 @@ class GuruAdminController extends Controller
     {
         $guru = Guru::findOrFail($id);
 
-        return view('admin.guru.form', [
-            'title' => 'Edit Guru',
+        return view('admin.guru.edit', [
+            'title' => 'Edit Data Pendidik: ' . ($guru->nama_lengkap ?? ''),
             'guru' => $guru,
         ]);
     }

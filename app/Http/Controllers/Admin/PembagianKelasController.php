@@ -30,7 +30,7 @@ class PembagianKelasController extends Controller
         }
 
         // Ambil daftar kelas tahun ajaran untuk TA aktif beserta relasinya
-        $kelasTaList = KelasTahunAjaran::with(['kelas', 'waliKelas'])
+        $kelasTaList = KelasTahunAjaran::with(['kelas', 'waliKelas', 'siswaKelas'])
             ->where('id_tahun_ajaran', $taAktif->id_tahun_ajaran)
             ->get()
             ->sortBy(function ($item) {

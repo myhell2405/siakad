@@ -8,10 +8,19 @@ use Illuminate\Http\Request;
 
 class TahunAjaranController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Data Tahun Ajaran';
-        $tahunAjaran = TahunAjaran::latest()->paginate(10);
+        $query = TahunAjaran::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('tahun_mulai', 'like', "%{$search}%")
+                  ->orWhere('tahun_selesai', 'like', "%{$search}%")
+                  ->orWhere('semester', 'like', "%{$search}%");
+        }
+
+        $tahunAjaran = $query->latest()->paginate(10)->withQueryString();
 
         return view('admin.tahun_ajaran.index', compact('title', 'tahunAjaran'));
     }
@@ -23,7 +32,7 @@ class TahunAjaranController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'tahun_mulai' => 'required',
             'tahun_selesai' => 'required',
             'semester' => 'required',
@@ -36,7 +45,7 @@ class TahunAjaranController extends Controller
             ]);
         }
 
-        TahunAjaran::create($request->validated());
+        TahunAjaran::create($validated);
 
         return redirect()->route('admin.tahun-ajaran.index')
             ->with('success', 'Tahun ajaran berhasil ditambahkan');
@@ -53,7 +62,7 @@ class TahunAjaranController extends Controller
     {
         $tahunAjaran = TahunAjaran::findOrFail($id);
 
-        $request->validate([
+        $validated = $request->validate([
             'tahun_mulai' => 'required',
             'tahun_selesai' => 'required',
             'semester' => 'required',
@@ -66,7 +75,7 @@ class TahunAjaranController extends Controller
             ]);
         }
 
-        $tahunAjaran->update($request->validated());
+        $tahunAjaran->update($validated);
 
         return redirect()->route('admin.tahun-ajaran.index')
             ->with('success', 'Tahun ajaran berhasil diperbarui');

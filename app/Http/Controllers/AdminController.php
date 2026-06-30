@@ -10,7 +10,32 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $totalSiswa = \App\Models\Siswa::count();
+        $totalGuru  = \App\Models\Guru::count();
+        $totalKelas = \App\Models\Kelas::count();
+        $totalMapel = \App\Models\Mapel::count();
+        $totalEkskul = \App\Models\Ekskul::count();
+        $totalWaliSiswa = \App\Models\WaliSiswa::count();
+        $rasioSiswaGuru = $totalGuru > 0 ? round($totalSiswa / $totalGuru) : 0;
+
+        $taAktif = \App\Models\TahunAjaran::where('status', 'aktif')->first() ?? \App\Models\TahunAjaran::latest('id_tahun_ajaran')->first();
+        $queryKelas = \App\Models\KelasTahunAjaran::with(['kelas', 'waliKelas'])->withCount('siswaKelas');
+        if ($taAktif) {
+            $queryKelas->where('id_tahun_ajaran', $taAktif->id_tahun_ajaran);
+        }
+        $distribusiKelas = $queryKelas->take(6)->get();
+
+        return view('admin.dashboard', compact(
+            'totalSiswa',
+            'totalGuru',
+            'totalKelas',
+            'totalMapel',
+            'totalEkskul',
+            'totalWaliSiswa',
+            'rasioSiswaGuru',
+            'distribusiKelas',
+            'taAktif'
+        ));
     }
 
     public function profil()

@@ -2,201 +2,179 @@
 
 @section('content')
 
-<div class="space-y-6">
+<div class="space-y-8 max-w-7xl mx-auto font-sans pb-16 text-slate-800">
 
-    <!-- Header -->
-    <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-800">
-            {{ $kelasTa->kelas->nama_kelas }}
-        </h1>
+    {{-- ================================================
+         HEADER SECTION (Floating Elevation)
+         ================================================ --}}
+    <div class="bg-white rounded-[2.5rem] p-8 sm:p-10 shadow-[0_15px_50px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 ring-1 ring-slate-900/[0.03] transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]">
+        
+        {{-- Background Kinetic Glow Orb --}}
+        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-cyan-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+
+        <div class="flex items-center gap-5 relative z-10">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/25 shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-3">
+                <i class="bi bi-mortarboard-fill text-3xl"></i>
+            </div>
+            <div class="space-y-1.5">
+                <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.15em] font-black bg-emerald-50/80 text-emerald-700 ring-1 ring-emerald-500/20 mb-1 shadow-2xs">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+                    </span>
+                    <span>Alokasi Peserta Didik</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                    {{ $kelasTa->kelas->nama_kelas ?? 'Detail Rombel' }}
+                </h1>
+                <p class="text-xs text-slate-400 font-bold flex items-center gap-3 pt-0.5">
+                    <span><i class="bi bi-calendar-check text-emerald-500"></i> TA: <strong class="text-slate-700">{{ $kelasTa->tahunAjaran->tahun_mulai ?? '' }}/{{ $kelasTa->tahunAjaran->tahun_selesai ?? '' }} ({{ $kelasTa->tahunAjaran->semester ?? '' }})</strong></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                    <span><i class="bi bi-person-badge text-emerald-500"></i> Wali Kelas: <strong class="text-slate-700">{{ $kelasTa->waliKelas->nama_lengkap ?? '-' }}</strong></span>
+                </p>
+            </div>
+        </div>
 
         <a href="{{ route('admin.pembagian-kelas.index') }}"
-           class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg">
-            Kembali
+           class="group relative z-10 inline-flex items-center gap-3 pl-5 pr-2 py-2 bg-slate-100 hover:bg-slate-900 text-slate-700 hover:text-white font-bold text-xs rounded-full transition-all duration-300 active:scale-[0.98] w-full sm:w-auto justify-between sm:justify-start shadow-2xs">
+            <span>Kembali ke Pembagian</span>
+            <div class="w-7 h-7 rounded-full bg-white group-hover:bg-white/20 flex items-center justify-center text-slate-800 group-hover:text-white transition-transform group-hover:-translate-x-0.5 shadow-2xs">
+                <i class="bi bi-arrow-left text-xs font-black"></i>
+            </div>
         </a>
     </div>
 
-    <!-- Informasi -->
-    <div class="bg-white rounded-xl shadow border p-6">
-        <div class="grid md:grid-cols-3 gap-6">
-
-            <div>
-                <label class="font-semibold text-gray-700">Tahun Ajaran</label>
-                <p>
-                    {{ $kelasTa->tahunAjaran->tahun_mulai }} /
-                    {{ $kelasTa->tahunAjaran->tahun_selesai }}
-                    ({{ $kelasTa->tahunAjaran->semester }})
-                </p>
+    {{-- FLASH MESSAGES --}}
+    @if(session('success'))
+        <div class="bg-gradient-to-r from-emerald-50 to-teal-50 ring-1 ring-emerald-500/30 text-emerald-900 p-5 rounded-3xl shadow-sm flex items-center gap-3.5 animate-fade-in font-bold text-xs">
+            <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-500/20">
+                <i class="bi bi-check-lg text-base font-black"></i>
             </div>
-
-            <div>
-                <label class="font-semibold text-gray-700">Wali Kelas</label>
-                <p>{{ $kelasTa->waliKelas->nama_lengkap }}</p>
-            </div>
-
+            <span>{{ session('success') }}</span>
         </div>
-    </div>
+    @endif
 
-    <!-- Siswa Kelas -->
-    <div class="bg-white rounded-xl shadow border p-6">
+    @if(session('error'))
+        <div class="bg-gradient-to-r from-rose-50 to-red-50 ring-1 ring-rose-500/30 text-rose-900 p-5 rounded-3xl shadow-sm flex items-center gap-3.5 animate-fade-in font-bold text-xs">
+            <div class="w-8 h-8 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-rose-500/20">
+                <i class="bi bi-exclamation-triangle-fill text-base font-black"></i>
+            </div>
+            <span>{{ session('error') }}</span>
+        </div>
+    @endif
 
-        <h2 class="text-xl font-semibold mb-4">
-            Siswa Kelas
-        </h2>
+    {{-- ================================================
+         FORM TAMBAH SISWA KE KELAS (Floating Elevation Card)
+         ================================================ --}}
+    <div class="bg-white rounded-[2.2rem] p-8 sm:p-10 shadow-[0_12px_45px_-10px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/[0.03] space-y-6">
+        
+        <div class="flex items-center gap-3.5 pb-5 border-b border-slate-100">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold shadow-md shadow-emerald-500/20">
+                <i class="bi bi-person-plus-fill text-lg"></i>
+            </div>
+            <div>
+                <h3 class="text-base font-black text-slate-900 tracking-tight">Masukkan Siswa ke Rombel Ini</h3>
+                <p class="text-xs text-slate-400 font-semibold">Pilih siswa yang belum mendapatkan kelas pada tahun ajaran ini</p>
+            </div>
+        </div>
 
-        <form action="{{ route('admin.kelas-ta.siswa.store', $kelasTa->id) }}"
-              method="POST"
-              class="flex gap-3 mb-6">
-
+        <form action="{{ route('admin.kelas-ta.siswa.store', $kelasTa->id) }}" method="POST" class="flex flex-col sm:flex-row items-center gap-4">
             @csrf
-
-            <select name="id_siswa"
-                    class="w-full border rounded-lg px-4 py-2 bg-white"
-                    required>
-                <option value="">-- Pilih Siswa Belum Dapat Kelas --</option>
-                @foreach($unassignedSiswa as $s)
-                    <option value="{{ $s->id }}">
-                        {{ $s->nama_siswa }} (NISN: {{ $s->nisn ?? '-' }})
-                    </option>
-                @endforeach
-            </select>
+            
+            <div class="relative w-full flex-1">
+                <select name="id_siswa" required
+                        class="w-full bg-slate-50 hover:bg-slate-100/70 border border-slate-200/80 rounded-2xl px-5 py-4 text-xs font-bold text-slate-900 focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/15 focus:border-emerald-600 transition-all shadow-inner appearance-none">
+                    <option value="">-- Pilih Siswa Belum Punya Kelas --</option>
+                    @foreach($unassignedSiswa as $s)
+                        <option value="{{ $s->id }}">{{ $s->nama_siswa }} (NISN: {{ $s->nisn ?? '-' }})</option>
+                    @endforeach
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400">
+                    <i class="bi bi-chevron-down text-xs font-black"></i>
+                </div>
+            </div>
 
             <button type="submit"
-                    class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg">
-                Tambah
+                    class="group px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs shadow-lg shadow-emerald-500/25 transition-all duration-300 active:scale-[0.98] w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-3">
+                <span>Masukkan Siswa</span>
+                <div class="w-6 h-6 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center transition-transform group-hover:translate-x-0.5">
+                    <i class="bi bi-plus-lg text-xs font-black"></i>
+                </div>
             </button>
-
         </form>
+    </div>
 
-        <table class="min-w-full divide-y divide-gray-200">
+    {{-- ================================================
+         TABEL DAFTAR SISWA KELAS
+         ================================================ --}}
+    <div class="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-[0_15px_50px_-15px_rgba(0,0,0,0.05)] ring-1 ring-slate-900/[0.03] overflow-hidden space-y-6">
+        
+        <div class="flex items-center justify-between px-2">
+            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider">Daftar Siswa Terdaftar</h3>
+            <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-black text-xs">{{ $siswaKelas->count() }} Siswa</span>
+        </div>
 
-            <thead class="bg-gray-800 text-white">
-                <tr>
-                    <th class="px-4 py-3">ID</th>
-                    <th class="px-4 py-3">Nama</th>
-                    <th class="px-4 py-3">NISN</th>
-                    <th class="px-4 py-3">Jenis Kelamin</th>
-                    <th class="px-4 py-3">Aksi</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @forelse($siswaKelas as $item)
-                    <tr>
-                        <td class="px-4 py-3">{{ $item->siswa->id }}</td>
-                        <td class="px-4 py-3">{{ $item->siswa->nama_siswa }}</td>
-                        <td class="px-4 py-3">{{ $item->siswa->nisn }}</td>
-                        <td class="px-4 py-3">{{ $item->siswa->jenis_kelamin }}</td>
-                        <td class="px-4 py-3 text-center">
-
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                        <th class="pb-4 pl-4 w-16">No</th>
+                        <th class="pb-4">Nama Siswa</th>
+                        <th class="pb-4">NISN</th>
+                        <th class="pb-4">Jenis Kelamin</th>
+                        <th class="pb-4 pr-4 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-xs font-bold text-slate-700">
+                    @forelse($siswaKelas as $item)
+                    <tr class="hover:bg-slate-50/80 transition-colors group">
+                        <td class="py-4 pl-4 text-slate-400 font-semibold">
+                            {{ $loop->iteration }}
+                        </td>
+                        <td class="py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-black text-sm shrink-0 group-hover:scale-110 transition-transform">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <span class="text-sm font-black text-slate-900">{{ $item->siswa->nama_siswa ?? '-' }}</span>
+                            </div>
+                        </td>
+                        <td class="py-4 text-slate-500 font-semibold">
+                            {{ $item->siswa->nisn ?? '-' }}
+                        </td>
+                        <td class="py-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-black {{ ($item->siswa->jenis_kelamin ?? '') == 'L' ? 'bg-blue-50 text-blue-700' : 'bg-rose-50 text-rose-700' }}">
+                                {{ ($item->siswa->jenis_kelamin ?? '') == 'L' ? 'Laki-laki' : 'Perempuan' }}
+                            </span>
+                        </td>
+                        <td class="py-4 pr-4 text-right">
                             <form action="{{ route('admin.kelas-ta.siswa.destroy', $item->id) }}"
                                   method="POST"
-                                  onsubmit="return confirm('Yakin hapus?')">
-
+                                  onsubmit="return confirm('Keluarkan siswa {{ $item->siswa->nama_siswa ?? '' }} dari kelas ini?')">
                                 @csrf
                                 @method('DELETE')
-
-                                <button class="bg-red-500 text-white px-3 py-1 rounded">
-                                    Hapus
+                                <button type="submit"
+                                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-gradient-to-r hover:from-rose-600 hover:to-red-600 text-rose-600 hover:text-white font-bold text-xs transition-all shadow-2xs hover:shadow-md hover:shadow-rose-500/20 active:scale-95">
+                                    <i class="bi bi-trash3-fill text-[11px]"></i> Keluarkan
                                 </button>
-
                             </form>
-
                         </td>
                     </tr>
-                @empty
+                    @empty
                     <tr>
-                        <td colspan="5"
-                            class="text-center py-6 text-gray-500">
-                            Belum ada siswa
+                        <td colspan="5" class="py-12 text-center text-slate-400 font-medium">
+                            <div class="flex flex-col items-center justify-center gap-3">
+                                <div class="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 text-2xl">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <span>Belum ada siswa yang dimasukkan ke dalam rombongan belajar ini.</span>
+                            </div>
                         </td>
                     </tr>
-                @endforelse
-            </tbody>
-
-        </table>
-
-    </div>
-
-    <!-- Guru Kelas -->
-    <div class="bg-white rounded-xl shadow border p-6">
-
-        <h2 class="text-xl font-semibold mb-4">
-            Guru Kelas
-        </h2>
-
-        <form action="{{ route('admin.kelas-ta.guru.store', $kelasTa->id) }}"
-              method="POST"
-              class="flex gap-3 mb-6">
-
-            @csrf
-
-            <select name="id_guru"
-                    class="w-full border rounded-lg px-4 py-2 bg-white"
-                    required>
-                <option value="">-- Pilih Guru Mengajar --</option>
-                @foreach($availableGuru as $g)
-                    <option value="{{ $g->id }}">
-                        {{ $g->nama_lengkap }} (NIP: {{ $g->nip ?? '-' }})
-                    </option>
-                @endforeach
-            </select>
-
-            <button type="submit"
-                    class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg">
-                Tambah
-            </button>
-
-        </form>
-
-        <table class="min-w-full divide-y divide-gray-200">
-
-            <thead class="bg-gray-800 text-white">
-                <tr>
-                    <th class="px-4 py-3">ID</th>
-                    <th class="px-4 py-3">Nama</th>
-                    <th class="px-4 py-3">NIP</th>
-                    <th class="px-4 py-3">Jenis Kelamin</th>
-                    <th class="px-4 py-3">Aksi</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @forelse($guruKelas as $item)
-                    <tr>
-                        <td class="px-4 py-3">{{ $item->guru->id }}</td>
-                        <td class="px-4 py-3">{{ $item->guru->nama_lengkap }}</td>
-                        <td class="px-4 py-3">{{ $item->guru->nip }}</td>
-                        <td class="px-4 py-3">{{ $item->guru->jenis_kelamin }}</td>
-                        <td class="px-4 py-3 text-center">
-
-                            <form action="{{ route('admin.kelas-ta.guru.destroy', $item->id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Yakin hapus?')">
-
-                                @csrf
-                                @method('DELETE')
-
-                                <button class="bg-red-500 text-white px-3 py-1 rounded">
-                                    Hapus
-                                </button>
-
-                            </form>
-
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5"
-                            class="text-center py-6 text-gray-500">
-                            Belum ada guru
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-
-        </table>
-
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>

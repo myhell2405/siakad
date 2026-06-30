@@ -11,10 +11,17 @@ class MapelController extends Controller
     /**
      * Display listing
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Data Mapel';
-        $mapel = Mapel::latest()->get();
+        $query = Mapel::with('guru');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('nama_mapel', 'like', "%{$search}%");
+        }
+
+        $mapel = $query->latest()->paginate(10)->withQueryString();
 
         return view('admin.mapel.index', compact('title', 'mapel'));
     }

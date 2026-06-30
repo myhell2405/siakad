@@ -1,53 +1,5 @@
 @extends('admin.layout')
 
 @section('content')
-
-<div class="max-w-3xl mx-auto">
-
-    <div class="bg-white rounded-xl shadow border">
-
-        <div class="border-b px-6 py-4">
-
-            <h1 class="text-2xl font-bold text-gray-800">
-                Edit Wali Siswa
-            </h1>
-
-        </div>
-
-        <div class="p-6">
-
-            @if ($errors->any())
-
-                <div class="mb-4 bg-red-100 border border-red-300 text-red-700 p-4 rounded-lg">
-
-                    <ul class="list-disc ml-5">
-
-                        @foreach ($errors->all() as $error)
-
-                            <li>{{ $error }}</li>
-
-                        @endforeach
-
-                    </ul>
-
-                </div>
-
-            @endif
-
-            <form action="{{ route('admin.wali-siswa.update', $waliSiswa->id_wali) }}"
-                  method="POST">
-
-                @csrf
-                @method('PUT')
-
-                @include('admin.wali_siswa.form')
-
-            </form>
-
-        </div>
-
-    </div>
-
-</div>
-
+    @include('admin.wali_siswa.form', ['title' => 'Edit Data Wali: ' . ($waliSiswa->nama_wali ?? '')])
 @endsection

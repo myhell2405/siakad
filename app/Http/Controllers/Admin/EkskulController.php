@@ -12,11 +12,17 @@ class EkskulController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ekskul = Ekskul::with('guru')
-            ->orderBy('nama_ekskul')
-            ->get();
+        $query = Ekskul::with('guru');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('nama_ekskul', 'like', "%{$search}%")
+                  ->orWhere('keterangan', 'like', "%{$search}%");
+        }
+
+        $ekskul = $query->orderBy('nama_ekskul')->paginate(10)->withQueryString();
 
         return view('admin.ekskul.index', [
             'title' => 'Data Ekstrakurikuler',
