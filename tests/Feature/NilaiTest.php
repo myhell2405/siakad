@@ -30,7 +30,7 @@ class NilaiTest extends TestCase
         ])->get('/admin/nilai');
 
         $response->assertStatus(200);
-        $response->assertSee('Kelola Nilai Siswa');
+        $response->assertSee('KELOLA NILAI SISWA');
     }
 
     public function test_admin_can_bulk_store_nilai()

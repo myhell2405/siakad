@@ -10,7 +10,7 @@ class GuruKelas extends Model
 
     protected $fillable = [
         'id_kelas_tahun_ajaran',
-        'id_guru',
+        'id_guru_mapel',
     ];
 
     /*
@@ -24,8 +24,8 @@ class GuruKelas extends Model
         return $this->belongsTo(KelasTahunAjaran::class, 'id_kelas_tahun_ajaran', 'id');
     }
 
-    public function guru()
+    public function guruMapel()
     {
-        return $this->belongsTo(Guru::class, 'id_guru', 'id');
+        return $this->belongsTo(GuruMapel::class, 'id_guru_mapel', 'id');
     }
 }

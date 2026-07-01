@@ -138,7 +138,7 @@ class NilaiSeeder extends Seeder
 
             // Assign guru mapel
             $assignedGuru = $gurus[$mIdx % count($gurus)];
-            GuruMapel::firstOrCreate([
+            $guruMapelModel = GuruMapel::firstOrCreate([
                 'id_guru' => $assignedGuru->id,
                 'id_mapel' => $mapelModel->id_mapel,
             ]);
@@ -146,7 +146,7 @@ class NilaiSeeder extends Seeder
             // Assign guru kelas agar mengajar lintas kelas (khusus kelas 4, 5, 6 atau seluruh kelas)
             foreach ($ktaModels as $kta) {
                 GuruKelas::firstOrCreate([
-                    'id_guru' => $assignedGuru->id,
+                    'id_guru_mapel' => $guruMapelModel->id,
                     'id_kelas_tahun_ajaran' => $kta->id,
                 ]);
             }

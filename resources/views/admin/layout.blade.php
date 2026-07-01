@@ -135,6 +135,19 @@
             margin: 0 !important;
             flex-shrink: 0 !important;
         }
+
+        @keyframes marquee-infinite {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-running-text-seamless {
+            display: flex;
+            width: max-content;
+            animation: marquee-infinite 30s linear infinite;
+        }
+        .animate-running-text-seamless:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 
@@ -196,8 +209,8 @@
                     <!-- Dashboard Common -->
                     <li>
                         <a href="{{ $dashboardLink }}" title="Dashboard"
-                            class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('*.dashboard') && !request()->routeIs('admin.dashboard.statis') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
-                            <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('*.dashboard') && !request()->routeIs('admin.dashboard.statis') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}"
+                            class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('*.dashboard') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
+                            <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('*.dashboard') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -205,16 +218,6 @@
                             <span class="sidebar-text tracking-tight truncate">Dashboard</span>
                         </a>
                     </li>
-
-                    <!-- <li>
-                        <a href="{{ route('admin.dashboard.statis') }}" title="Showcase Gen-Z (Statis)"
-                            class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.dashboard.statis') ? 'bg-signal text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
-                            <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.dashboard.statis') ? 'text-white' : 'text-gray-400 group-hover:text-signal' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
-                            <span class="sidebar-text tracking-tight truncate">Showcase Gen-Z</span>
-                        </a>
-                    </li> -->
 
                     {{-- ============================================ --}}
                     {{-- 👑 MENU ADMIN & DATA MASTER --}}
@@ -304,6 +307,17 @@
                                 </svg>
                                 <span class="sidebar-text tracking-tight truncate">Monitoring Nilai Akademik
                                     Real-Time</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor / Transkrip"
+                                class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.rapor') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
+                                <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.rapor') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                                </svg>
+                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor / Transkrip</span>
                             </a>
                         </li>
                     @endif
@@ -403,25 +417,25 @@
                                 Siswa</span>
                         </li>
                         <li>
-                            <a href="{{ route('admin.nilai.index') }}" title="Transkip Nilai Akademik Real-Time"
+                            <a href="{{ route('admin.nilai.index') }}" title="Transkrip Nilai Akademik"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.nilai.index') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.nilai.index') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Transkip Nilai Akademik Real-Time</span>
+                                <span class="sidebar-text tracking-tight truncate">Transkrip Nilai Akademik</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor"
+                            <a href="{{ route('admin.laporan.rapor') }}" title="Lihat Rapor Resmi"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.rapor') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.rapor') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor</span>
+                                <span class="sidebar-text tracking-tight truncate">Lihat Rapor Resmi</span>
                             </a>
                         </li>
                     @endif

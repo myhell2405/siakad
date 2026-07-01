@@ -59,7 +59,7 @@ class KelasTahunAjaranController extends Controller
             ->where('id_kelas_tahun_ajaran', $id)
             ->get();
 
-        $guruKelas = GuruKelas::with('guru')
+        $guruKelas = GuruKelas::with(['guruMapel.guru', 'guruMapel.mapel'])
             ->where('id_kelas_tahun_ajaran', $id)
             ->get();
 
@@ -72,11 +72,14 @@ class KelasTahunAjaranController extends Controller
             ->orderBy('nama_siswa')
             ->get();
 
-        // Cari guru yang belum terdaftar di kelas ini
-        $enrolledGuruIds = $guruKelas->pluck('id_guru');
-        $availableGuru = Guru::whereNotIn('id', $enrolledGuruIds)
-            ->orderBy('nama_lengkap')
-            ->get();
+        // Cari guru mapel yang belum terdaftar di kelas ini
+        $enrolledGuruMapelIds = $guruKelas->pluck('id_guru_mapel');
+        $availableGuru = \App\Models\GuruMapel::with(['guru', 'mapel'])
+            ->whereNotIn('id', $enrolledGuruMapelIds)
+            ->get()
+            ->sortBy(function ($item) {
+                return $item->guru->nama_lengkap ?? '';
+            });
 
         return view('admin.kelas.gurukelas', [
             'title' => 'Detail Kelas',
@@ -127,12 +130,12 @@ class KelasTahunAjaranController extends Controller
     public function storeGuru(Request $request, $id)
     {
         $request->validate([
-            'id_guru' => 'required',
+            'id_guru_mapel' => 'required',
         ]);
 
         GuruKelas::create([
             'id_kelas_tahun_ajaran' => $id,
-            'id_guru' => $request->id_guru,
+            'id_guru_mapel' => $request->id_guru_mapel,
         ]);
 
         return back()->with('success', 'Guru berhasil ditambahkan');

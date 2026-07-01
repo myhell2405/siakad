@@ -86,8 +86,8 @@
                 </button>
 
                 <button @click="tab = 'pixels'" :class="tab === 'pixels' ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100 font-medium'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs transition-all text-left">
-                    <i class="bi bi-cpu-fill text-sm"></i>
-                    <span>Pixel Seat Denah</span>
+                    <i class="bi bi-broadcast text-sm"></i>
+                    <span>Live Running Text</span>
                 </button>
 
                 <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:text-void hover:bg-gray-100 font-medium text-xs transition-all">
@@ -231,66 +231,25 @@
 
                 </div>
 
-                <!-- INNOVATIVE FEATURE: THE 32-PIXEL SEAT GRID FOR EVERY CLASSROOM -->
-                <div class="bg-white rounded-3xl p-8 border border-black/10 shadow-xs space-y-6">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gray-100">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 bg-void inline-block"></span>
-                                <h3 class="text-xl font-black text-void uppercase tracking-tight">PIXEL SEAT MATRIX — VISUALISASI BANGKU REALTIME</h3>
-                            </div>
-                            <p class="text-xs font-mono text-gray-500 mt-1">Setiap kotak kecil mewakili 1 siswa (32 bangku per kelas). Hijau = Hadir, Kuning = Sakit/Izin, Merah = Alpa.</p>
+                <!-- RUNNING TEXT FRONTAL (LIVE TELEMETRY BANNER) -->
+                <div class="bg-void rounded-3xl p-6 sm:p-8 border-2 border-black shadow-[0_12px_35px_rgba(0,0,0,0.35)] overflow-hidden relative">
+                    <div class="absolute inset-0 bg-signal/15 pointer-events-none"></div>
+                    <div class="flex items-center justify-between gap-4 mb-5 border-b border-white/15 pb-4 relative z-10">
+                        <div class="flex items-center gap-3">
+                            <span class="w-3 h-3 rounded-full bg-signal animate-ping"></span>
+                            <span class="text-xs font-mono font-black uppercase tracking-[0.25em] text-signal">PENGUMUMAN & TELEMETRI AKADEMIK REAL-TIME</span>
                         </div>
-                        <div class="flex items-center gap-4 font-mono text-xs font-bold">
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-xs bg-emerald-600 inline-block"></span> Hadir</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-xs bg-amber-500 inline-block"></span> Izin</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-xs bg-signal inline-block"></span> Alpa</span>
-                        </div>
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-white/60 bg-white/10 px-3 py-1 rounded-full border border-white/10">LIVE FEED</span>
                     </div>
-
-                    <!-- 6 Room Cards with Pixel Seat Grids -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <template x-for="room in rooms" :key="room.code">
-                            <div class="p-6 rounded-2xl bg-gray-50 border border-black/10 hover:border-void transition-all duration-300 flex flex-col justify-between space-y-5">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <span class="w-10 h-10 rounded-xl bg-void text-white font-mono font-black text-sm flex items-center justify-center" x-text="room.code"></span>
-                                        <div>
-                                            <h4 class="text-sm font-extrabold text-void uppercase" x-text="room.name"></h4>
-                                            <p class="text-[11px] font-mono text-gray-500 truncate" x-text="room.teacher"></p>
-                                        </div>
-                                    </div>
-                                    <span class="font-mono font-black text-xs px-2.5 py-1 rounded bg-white border border-black/10 text-void" x-text="Math.round((room.present/room.total)*100) + '%'"></span>
-                                </div>
-
-                                <!-- 32 PIXEL SEAT GRID (4 rows x 8 cols) -->
-                                <div class="p-3 rounded-xl bg-white border border-black/5 space-y-2">
-                                    <div class="text-[10px] font-mono text-gray-400 uppercase flex justify-between font-bold">
-                                        <span>Denah Bangku (32 Kursi)</span>
-                                        <span x-text="room.present + ' Hadir'"></span>
-                                    </div>
-                                    <div class="grid grid-cols-8 gap-1.5">
-                                        <!-- Present seats -->
-                                        <template x-for="i in room.present" :key="'p'+i">
-                                            <div class="w-full h-3 rounded-xs bg-emerald-600 hover:scale-125 transition-transform cursor-pointer" :title="'Siswa #' + i + ': Hadir'"></div>
-                                        </template>
-                                        <!-- Sick seats -->
-                                        <template x-for="j in room.sick" :key="'s'+j">
-                                            <div class="w-full h-3 rounded-xs bg-amber-500 hover:scale-125 transition-transform cursor-pointer animate-pulse" :title="'Siswa Izin/Sakit'"></div>
-                                        </template>
-                                        <!-- Alpha seats -->
-                                        <template x-for="k in room.alpha" :key="'a'+k">
-                                            <div class="w-full h-3 rounded-xs bg-signal hover:scale-125 transition-transform cursor-pointer animate-ping" :title="'Siswa Alpa'"></div>
-                                        </template>
-                                    </div>
-                                </div>
-
-                                <div class="flex justify-between items-center text-xs font-mono font-bold pt-2 border-t border-gray-200">
-                                    <span class="text-gray-500">KURIKULUM MERDEKA</span>
-                                    <span class="text-cobalt">VERIFIKASI AKTIF</span>
-                                </div>
-                            </div>
-                        </template>
+                    <div class="relative overflow-hidden py-3 z-10 select-none">
+                        <div class="animate-running-text-seamless">
+                            <span class="text-3xl sm:text-4xl md:text-5xl font-black font-mono uppercase tracking-wider text-white drop-shadow-[0_6px_12px_rgba(255,51,51,0.85)] pr-12">
+                                🚀 SELAMAT DATANG DI PORTAL SIAKAD SD NEGERI 01 DURIAN GADANG &bull; TAHUN AJARAN 2025/2026 AKTIF &bull; IMPLEMENTASI KURIKULUM MERDEKA TERINTEGRASI &bull; PENGOLAHAN NILAI RAPOR, EKSKUL, & ABSENSI SECARA REAL-TIME &bull; DATA MASTER & MANAJEMEN KELAS EFISIEN &bull; ⚡
+                            </span>
+                            <span class="text-3xl sm:text-4xl md:text-5xl font-black font-mono uppercase tracking-wider text-white drop-shadow-[0_6px_12px_rgba(255,51,51,0.85)] pr-12">
+                                🚀 SELAMAT DATANG DI PORTAL SIAKAD SD NEGERI 01 DURIAN GADANG &bull; TAHUN AJARAN 2025/2026 AKTIF &bull; IMPLEMENTASI KURIKULUM MERDEKA TERINTEGRASI &bull; PENGOLAHAN NILAI RAPOR, EKSKUL, & ABSENSI SECARA REAL-TIME &bull; DATA MASTER & MANAJEMEN KELAS EFISIEN &bull; ⚡
+                            </span>
+                        </div>
                     </div>
                 </div>
 

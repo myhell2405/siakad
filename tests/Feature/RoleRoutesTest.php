@@ -72,7 +72,7 @@ class RoleRoutesTest extends TestCase
         $this->withSession(['id_user' => 3, 'role' => 'siswa', 'ref_id' => 1, 'permissions' => ['view_nilai_siswa']])
             ->get('/admin/laporan/rapor')->assertStatus(200)->assertDontSee('Isi Data');
         $this->withSession(['id_user' => 3, 'role' => 'siswa', 'ref_id' => 1, 'permissions' => ['view_nilai_siswa']])
-            ->get('/admin/nilai')->assertStatus(200)->assertSee('Transkrip Nilai Saya');
+            ->get('/admin/nilai')->assertStatus(200)->assertSee('Transkrip Nilai Akademik');
         $this->withSession(['id_user' => 3, 'role' => 'siswa'])
             ->get('/admin/profil')->assertStatus(200);
 
