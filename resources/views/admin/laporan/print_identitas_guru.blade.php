@@ -9,20 +9,45 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 2.5cm;
+            margin: 0mm !important;
         }
         body {
             font-family: 'Arial', sans-serif;
             color: #000;
             line-height: 1.8;
         }
+        .print-sheet {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 25mm;
+            margin: 0 auto 2rem auto;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0mm !important;
+            }
             .no-print {
                 display: none !important;
             }
             body {
                 padding: 0;
                 margin: 0;
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .print-sheet {
+                width: 210mm !important;
+                min-height: 297mm !important;
+                padding: 20mm 25mm !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                box-sizing: border-box !important;
             }
         }
     </style>
@@ -30,20 +55,26 @@
 <body class="bg-gray-100 py-8 px-4 print:bg-white print:py-0 print:px-0">
 
     <!-- Top Action Bar (Hidden on Print) -->
-    <div class="max-w-3xl mx-auto mb-6 bg-white p-4 rounded-xl shadow flex justify-between items-center no-print border">
-        <div class="flex items-center gap-3">
-            <button onclick="window.close()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-semibold transition-colors">
-                <i class="bi bi-arrow-left"></i> Kemabli / Tutup
+    <div class="max-w-3xl mx-auto mb-6 bg-white p-4 rounded-xl shadow no-print border flex flex-col gap-3">
+        <div class="flex justify-between items-center flex-wrap gap-2">
+            <div class="flex items-center gap-3">
+                <button onclick="window.close()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-semibold transition-colors">
+                    <i class="bi bi-arrow-left"></i> Kembali / Tutup
+                </button>
+                <span class="text-sm font-medium text-gray-600">Pratinjau Cetak Identitas Guru Kelas</span>
+            </div>
+            <button onclick="window.print()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold shadow-lg transition-colors flex items-center gap-2">
+                <i class="bi bi-printer-fill"></i> Cetak Sekarang (A4)
             </button>
-            <span class="text-sm font-medium text-gray-600">Pratinjau Cetak Identitas Guru Kelas</span>
         </div>
-        <button onclick="window.print()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold shadow-lg transition-colors flex items-center gap-2">
-            <i class="bi bi-printer-fill"></i> Cetak Sekarang (A4)
-        </button>
+        <div class="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-2.5 rounded-lg text-xs flex items-center gap-2">
+            <i class="bi bi-info-circle-fill text-amber-600 text-base shrink-0"></i>
+            <span><strong>Tips Cetak Bersih:</strong> Jika masih muncul tulisan tanggal/waktu atau URL di pojok atas/bawah kertas, pastikan pada pengaturan cetak browser Anda (Setelan Tambahan / More Settings) opsi <strong>Headers and footers</strong> (Header dan catatan kaki) sudah <strong>tidak dicentang</strong>.</span>
+        </div>
     </div>
 
     <!-- Printable F4/A4 Sheet -->
-    <div class="max-w-3xl mx-auto bg-white p-12 shadow-xl print:shadow-none print:p-0">
+    <div class="print-sheet">
         
         <h1 class="text-center font-bold text-xl tracking-wide uppercase mb-12">IDENTITAS GURU KELAS</h1>
 

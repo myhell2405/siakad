@@ -39,11 +39,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
+        html,
         body {
             background-color: #f4f4f6;
             color: #111827;
             font-family: 'Space Grotesk', sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden !important;
+            max-width: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         /* Subtle Engineering Dot Grid */
@@ -135,19 +141,6 @@
             margin: 0 !important;
             flex-shrink: 0 !important;
         }
-
-        @keyframes marquee-infinite {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-running-text-seamless {
-            display: flex;
-            width: max-content;
-            animation: marquee-infinite 30s linear infinite;
-        }
-        .animate-running-text-seamless:hover {
-            animation-play-state: paused;
-        }
     </style>
 </head>
 
@@ -174,7 +167,7 @@
         $dashboardLink = route('admin.dashboard');
     @endphp
 
-    <div class="flex">
+    <div class="flex min-h-screen w-full max-w-full overflow-x-hidden">
 
         <!-- =======================
              SIDEBAR NAVIGATION (Nothing OS Aesthetic)
@@ -310,14 +303,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor / Transkrip"
+                            <a href="{{ route('admin.laporan.rapor') }}" title="Cetak Rapor"
                                 class="group flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.laporan.rapor') ? 'bg-void text-white font-bold shadow-md' : 'text-gray-600 hover:text-void hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110 {{ request()->routeIs('admin.laporan.rapor') ? 'text-white' : 'text-gray-400 group-hover:text-void' }}"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                                 </svg>
-                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor / Transkrip</span>
+                                <span class="sidebar-text tracking-tight truncate">Cetak Rapor</span>
                             </a>
                         </li>
                     @endif
@@ -502,7 +495,8 @@
              MAIN CONTENT WRAPPER
         ====================== -->
 
-        <div id="mainWrapper" class="flex-1 transition-all duration-300 ml-[260px] min-h-screen flex flex-col">
+        <div id="mainWrapper"
+            class="flex-1 transition-all duration-300 ml-[260px] min-h-screen flex flex-col min-w-0 max-w-full overflow-x-hidden">
 
             <!-- TOPBAR HEADER (Nothing OS Ticker Style) -->
             <nav id="topbar"
@@ -560,7 +554,8 @@
 
             </nav>
 
-            <main id="content" class="pt-[100px] px-6 sm:px-8 pb-12 flex-1 transition-all duration-300">
+            <main id="content"
+                class="pt-[100px] px-6 sm:px-8 pb-12 flex-1 transition-all duration-300 min-w-0 max-w-full overflow-x-hidden">
                 @if(session('impersonator_id'))
                     <div
                         class="mb-6 bg-signal text-white p-4 rounded-2xl font-mono text-xs font-bold uppercase flex flex-col sm:flex-row items-center justify-between gap-4 border border-black shadow-md animate-fade-in">

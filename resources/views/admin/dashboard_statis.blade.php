@@ -231,28 +231,6 @@
 
                 </div>
 
-                <!-- RUNNING TEXT FRONTAL (LIVE TELEMETRY BANNER) -->
-                <div class="bg-void rounded-3xl p-6 sm:p-8 border-2 border-black shadow-[0_12px_35px_rgba(0,0,0,0.35)] overflow-hidden relative">
-                    <div class="absolute inset-0 bg-signal/15 pointer-events-none"></div>
-                    <div class="flex items-center justify-between gap-4 mb-5 border-b border-white/15 pb-4 relative z-10">
-                        <div class="flex items-center gap-3">
-                            <span class="w-3 h-3 rounded-full bg-signal animate-ping"></span>
-                            <span class="text-xs font-mono font-black uppercase tracking-[0.25em] text-signal">PENGUMUMAN & TELEMETRI AKADEMIK REAL-TIME</span>
-                        </div>
-                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-white/60 bg-white/10 px-3 py-1 rounded-full border border-white/10">LIVE FEED</span>
-                    </div>
-                    <div class="relative overflow-hidden py-3 z-10 select-none">
-                        <div class="animate-running-text-seamless">
-                            <span class="text-3xl sm:text-4xl md:text-5xl font-black font-mono uppercase tracking-wider text-white drop-shadow-[0_6px_12px_rgba(255,51,51,0.85)] pr-12">
-                                🚀 SELAMAT DATANG DI PORTAL SIAKAD SD NEGERI 01 DURIAN GADANG &bull; TAHUN AJARAN 2025/2026 AKTIF &bull; IMPLEMENTASI KURIKULUM MERDEKA TERINTEGRASI &bull; PENGOLAHAN NILAI RAPOR, EKSKUL, & ABSENSI SECARA REAL-TIME &bull; DATA MASTER & MANAJEMEN KELAS EFISIEN &bull; ⚡
-                            </span>
-                            <span class="text-3xl sm:text-4xl md:text-5xl font-black font-mono uppercase tracking-wider text-white drop-shadow-[0_6px_12px_rgba(255,51,51,0.85)] pr-12">
-                                🚀 SELAMAT DATANG DI PORTAL SIAKAD SD NEGERI 01 DURIAN GADANG &bull; TAHUN AJARAN 2025/2026 AKTIF &bull; IMPLEMENTASI KURIKULUM MERDEKA TERINTEGRASI &bull; PENGOLAHAN NILAI RAPOR, EKSKUL, & ABSENSI SECARA REAL-TIME &bull; DATA MASTER & MANAJEMEN KELAS EFISIEN &bull; ⚡
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
             <!-- TAB 2: PIXEL SEAT DENAH INSPECTOR -->

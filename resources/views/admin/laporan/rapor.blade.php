@@ -110,10 +110,10 @@
                                 $myRank = $rankings->get($sk->id_siswa, '-');
                             @endphp
                             <tr class="hover:bg-gray-50/80 transition duration-150">
-                                <td class="py-4 pl-6 text-center font-mono font-bold text-gray-400">{{ $index + 1 }}</td>
-                                <td class="py-4 px-4 font-mono font-bold text-gray-600">{{ $sk->siswa->nisn ?? '-' }}</td>
+                                <td class="py-4 pl-6 text-center font-mono font-bold text-gray-400 whitespace-nowrap">{{ $index + 1 }}</td>
+                                <td class="py-4 px-4 font-mono font-bold text-gray-600 whitespace-nowrap">{{ $sk->siswa->nisn ?? '-' }}</td>
                                 <td class="py-4 px-4 font-bold text-void uppercase">{{ $sk->siswa->nama_siswa ?? '-' }}</td>
-                                <td class="py-4 px-4 text-center font-mono font-black text-cobalt text-sm">
+                                <td class="py-4 px-4 text-center font-mono font-black text-cobalt text-sm whitespace-nowrap">
                                     {{ $myRank !== '-' ? '#' . $myRank : '-' }}
                                 </td>
                                 <td class="py-4 px-4 text-xs font-mono">
@@ -123,13 +123,17 @@
                                         <span class="text-gray-400 italic">-</span>
                                     @endforelse
                                 </td>
-                                <td class="py-4 px-4 text-center font-mono font-bold">
-                                    <span class="px-2 py-0.5 bg-gray-100 text-void border border-black/10 rounded">{{ $r->sakit ?? 0 }}</span> /
-                                    <span class="px-2 py-0.5 bg-gray-100 text-cobalt border border-black/10 rounded">{{ $r->izin ?? 0 }}</span> /
-                                    <span class="px-2 py-0.5 bg-void text-signal border border-black rounded">{{ $r->alpa ?? 0 }}</span>
+                                <td class="py-4 px-4 text-center font-mono font-bold whitespace-nowrap">
+                                    <div class="inline-flex items-center gap-1.5 bg-gray-50 border border-black/10 px-2.5 py-1 rounded-lg text-xs">
+                                        <span title="Sakit" class="inline-flex items-center gap-1 text-gray-700"><span class="text-gray-400 font-normal">S:</span>{{ $r->sakit ?? 0 }}</span>
+                                        <span class="text-gray-300">/</span>
+                                        <span title="Izin" class="inline-flex items-center gap-1 text-cobalt"><span class="text-gray-400 font-normal">I:</span>{{ $r->izin ?? 0 }}</span>
+                                        <span class="text-gray-300">/</span>
+                                        <span title="Alpa" class="inline-flex items-center gap-1 {{ ($r->alpa ?? 0) > 0 ? 'text-rose-600 font-extrabold' : 'text-gray-700' }}"><span class="text-gray-400 font-normal">A:</span>{{ $r->alpa ?? 0 }}</span>
+                                    </div>
                                 </td>
                                 <td class="py-4 px-4 text-xs text-gray-600 max-w-xs truncate italic font-mono uppercase">"{{ $r->catatan_wali_kelas ?? '-' }}"</td>
-                                <td class="py-4 px-4 text-center font-bold">
+                                <td class="py-4 px-4 text-center font-bold whitespace-nowrap">
                                     @if ($r && $r->status_kenaikan == 'Naik Kelas')
                                         <span class="px-3 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded font-mono text-[10px] uppercase font-bold">NAIK KELAS</span>
                                     @elseif ($r && $r->status_kenaikan == 'Tidak Naik Kelas')
@@ -138,15 +142,17 @@
                                         <span class="text-gray-400 font-mono">-</span>
                                     @endif
                                 </td>
-                                <td class="py-4 pr-6 text-center space-x-1.5 flex items-center justify-center">
-                                    @if(in_array(strtolower(session('role')), ['admin', 'wali_kelas']))
-                                        <button onclick="openModalRapor({{ $sk->id_siswa }}, '{{ addslashes($sk->siswa->nama_siswa ?? '') }}', {{ $r->sakit ?? 0 }}, {{ $r->izin ?? 0 }}, {{ $r->alpa ?? 0 }}, '{{ addslashes($r->catatan_wali_kelas ?? '') }}', '{{ $r->status_kenaikan ?? '' }}')" class="px-3 py-1.5 bg-gray-100 hover:bg-void text-void hover:text-white border border-black/10 rounded-lg text-xs font-mono font-bold transition-all uppercase inline-flex items-center gap-1">
-                                            <i class="bi bi-pencil-square text-signal"></i> ISI
-                                        </button>
-                                    @endif
-                                    <a href="{{ route('admin.laporan.rapor', ['id_ta' => $id_ta, 'id_kelas' => $id_kelas, 'id_siswa' => $sk->id_siswa, 'print' => 1]) }}" target="_blank" class="px-3 py-1.5 bg-void hover:bg-black text-white rounded-lg text-xs font-mono font-bold transition-all shadow-md active:scale-95 uppercase inline-flex items-center gap-1">
-                                        <i class="bi bi-printer-fill text-signal"></i> CETAK
-                                    </a>
+                                <td class="py-4 pr-6 text-center space-x-1.5 whitespace-nowrap">
+                                    <div class="inline-flex items-center justify-center gap-1.5">
+                                        @if(in_array(strtolower(session('role')), ['admin', 'wali_kelas']))
+                                            <button onclick="openModalRapor({{ $sk->id_siswa }}, '{{ addslashes($sk->siswa->nama_siswa ?? '') }}', {{ $r->sakit ?? 0 }}, {{ $r->izin ?? 0 }}, {{ $r->alpa ?? 0 }}, '{{ addslashes($r->catatan_wali_kelas ?? '') }}', '{{ $r->status_kenaikan ?? '' }}')" class="px-3 py-1.5 bg-gray-100 hover:bg-void text-void hover:text-white border border-black/10 rounded-lg text-xs font-mono font-bold transition-all uppercase inline-flex items-center gap-1">
+                                                <i class="bi bi-pencil-square text-signal"></i> ISI
+                                            </button>
+                                        @endif
+                                        <a href="{{ route('admin.laporan.rapor', ['id_ta' => $id_ta, 'id_kelas' => $id_kelas, 'id_siswa' => $sk->id_siswa, 'print' => 1]) }}" target="_blank" class="px-3 py-1.5 bg-void hover:bg-black text-white rounded-lg text-xs font-mono font-bold transition-all shadow-md active:scale-95 uppercase inline-flex items-center gap-1">
+                                            <i class="bi bi-printer-fill text-signal"></i> CETAK
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
