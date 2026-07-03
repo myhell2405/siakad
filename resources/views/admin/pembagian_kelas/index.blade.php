@@ -119,7 +119,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
                 <div>
                     <h3 class="text-base font-black text-void uppercase font-sans tracking-tight">DAFTAR PENUGASAN WALI KELAS & ROMBEL</h3>
-                    <p class="text-xs text-gray-400 font-mono uppercase">Ubah wali kelas langsung pada dropdown di bawah atau klik tombol Atur Siswa</p>
+                    <p class="text-xs text-gray-400 font-mono uppercase">Ubah wali kelas langsung pada dropdown di bawah atau klik tombol Atur Kelas</p>
                 </div>
             </div>
 
@@ -183,11 +183,11 @@
                             </td>
                             <td class="py-4 pr-3 text-right">
                                 <div class="inline-flex items-center justify-end gap-2">
-                                    {{-- ATUR SISWA BUTTON --}}
+                                    {{-- ATUR KELAS BUTTON --}}
                                     <a href="{{ route('admin.kelas-ta.detail', $item->id) }}"
                                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-void hover:bg-black text-white font-bold text-xs shadow-sm transition uppercase"
-                                       title="Atur Siswa Rombel">
-                                        <i class="bi bi-person-lines-fill text-signal"></i> ATUR SISWA
+                                       title="Atur Kelas Rombel">
+                                        <i class="bi bi-person-lines-fill text-signal"></i> ATUR KELAS
                                     </a>
 
                                     {{-- DELETE BUTTON --}}

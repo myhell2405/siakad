@@ -72,6 +72,11 @@
                                     title="Lihat Detail Kelas">
                                     <i class="bi bi-eye-fill text-xs"></i>
                                 </button>
+                                <a href="{{ route('admin.kelas.guru.index', $item->id_kelas) }}"
+                                   class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-cobalt hover:text-white text-void flex items-center justify-center transition"
+                                   title="Atur Guru Kelas">
+                                    <i class="bi bi-person-workspace text-xs"></i>
+                                </a>
                                 <a href="{{ route('admin.kelas.edit', $item->id_kelas) }}"
                                    class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-amber-500 hover:text-white text-void flex items-center justify-center transition"
                                    title="Edit Kelas">

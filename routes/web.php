@@ -70,6 +70,14 @@ Route::prefix('admin')
                     Route::post('/', [MapelGuruController::class, 'store'])->name('store');
                     Route::delete('/{id_guru}', [MapelGuruController::class, 'destroy'])->name('destroy');
                 });
+
+            Route::prefix('kelas/{id}/guru')
+                ->name('kelas.guru.')
+                ->group(function () {
+                    Route::get('/', [KelasController::class, 'guruIndex'])->name('index');
+                    Route::post('/', [KelasController::class, 'guruStore'])->name('store');
+                    Route::delete('/', [KelasController::class, 'guruDestroy'])->name('destroy');
+                });
         });
 
         // Pembagian Kelas
