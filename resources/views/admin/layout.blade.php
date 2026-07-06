@@ -584,8 +584,7 @@
             <!-- FOOTER -->
             <footer
                 class="bg-white border-t border-black/10 py-5 px-8 text-center text-xs font-mono font-bold text-gray-400 tracking-wider uppercase">
-                &copy; {{ date('Y') }} <span class="text-void font-black">SIAKAD SD NEGERI 01 DURIAN GADANG</span> //
-                NOTHING OS ARCHITECTURE V3.0
+                &copy; {{ date('Y') }} <span class="text-void font-black">SIAKAD SD NEGERI 01 DURIAN GADANG</span>
             </footer>
 
         </div>

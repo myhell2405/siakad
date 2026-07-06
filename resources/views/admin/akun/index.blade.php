@@ -147,10 +147,10 @@
                             <td class="py-4 pl-6 text-center font-mono font-bold text-gray-400">{{ $users->firstItem() + $index }}</td>
                             <td class="py-4 px-6 font-mono font-black text-void text-sm">{{ $user->username }}</td>
                             <td class="py-4 px-6">
-                                @if($user->guru)
+                                @if(in_array($user->role?->nama_role, ['guru', 'wali_kelas', 'kepala_sekolah']) && $user->guru)
                                     <span class="font-bold text-void block text-sm uppercase">{{ $user->guru->nama_lengkap }}</span>
                                     <span class="text-[10px] text-cobalt font-mono uppercase font-bold">NIP: {{ $user->guru->nip ?? '-' }}</span>
-                                @elseif($user->siswa)
+                                @elseif($user->role?->nama_role == 'siswa' && $user->siswa)
                                     <span class="font-bold text-void block text-sm uppercase">{{ $user->siswa->nama_siswa }}</span>
                                     <span class="text-[10px] text-emerald-700 font-mono uppercase font-bold">NISN: {{ $user->siswa->nisn ?? '-' }}</span>
                                 @else

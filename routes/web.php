@@ -53,6 +53,7 @@ Route::prefix('admin')
         Route::middleware(['role:admin,kelola_master'])->group(function () {
             Route::resource('guru', GuruAdminController::class);
             Route::get('siswa/export', [SiswaAdminController::class, 'export'])->name('siswa.export');
+            Route::get('siswa/{id}/transkrip', [SiswaAdminController::class, 'transkrip'])->name('siswa.transkrip');
             Route::resource('siswa', SiswaAdminController::class);
             Route::resource('kelas', KelasController::class);
             Route::resource('mapel', MapelController::class);
@@ -130,6 +131,7 @@ Route::prefix('admin')
                     Route::get('/rapor', [LaporanController::class, 'rapor'])->name('rapor');
                     Route::post('/rapor/simpan', [LaporanController::class, 'simpanRapor'])->name('rapor.simpan');
                     Route::get('/monitoring', [LaporanController::class, 'monitoring'])->name('monitoring');
+                    Route::get('/transkrip', [LaporanController::class, 'transkrip'])->name('transkrip');
                 });
         });
 

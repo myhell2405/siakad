@@ -23,58 +23,76 @@
                     </p>
                 </div>
             </div>
+
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <a href="{{ route('admin.laporan.transkrip') }}" target="_blank"
+                   class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-void hover:bg-black text-white font-mono font-bold text-xs transition shadow-md uppercase">
+                    <i class="bi bi-printer-fill"></i>
+                    <span>CETAK TRANSKRIP SAYA</span>
+                </a>
+            </div>
         </div>
 
         <div class="bg-white rounded-3xl border border-black/10 shadow-xs overflow-hidden">
-            <div class="p-6 border-b border-black/10 flex items-center justify-between bg-gray-50">
-                <h2 class="text-sm font-black text-void uppercase tracking-wider font-mono flex items-center gap-2">
-                    <i class="bi bi-journal-bookmark text-cobalt text-base"></i> REKAPITULASI NILAI AKADEMIK
-                </h2>
-                <span class="text-[10px] bg-void text-white px-3 py-1 rounded font-mono font-bold uppercase">TOTAL: {{ $nilaisSiswa->count() }} MAPEL</span>
-            </div>
+            @php
+                $groupedNilai = $nilaisSiswa->groupBy(function($n) {
+                    $ta = $n->kelasTahunAjaran->tahunAjaran ?? null;
+                    $kelas = $n->kelasTahunAjaran->kelas ?? null;
+                    $taName = $ta ? $ta->tahun_ajaran . ' - ' . strtoupper($ta->semester) : 'SEMESTER TIDAK DIKETAHUI';
+                    $kelasName = $kelas ? strtoupper($kelas->nama_kelas) : 'KELAS TIDAK DIKETAHUI';
+                    return $taName . ' (' . $kelasName . ')';
+                })->sortKeysDesc();
+            @endphp
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-surface border-b border-black/10 text-void font-mono text-[10px] uppercase tracking-wider">
-                            <th class="py-4 pl-6">MATA PELAJARAN</th>
-                            <th class="py-4 text-center">KKM</th>
-                            <th class="py-4 text-center">TUGAS</th>
-                            <th class="py-4 text-center">UTS</th>
-                            <th class="py-4 text-center">UAS</th>
-                            <th class="py-4 text-center">NILAI AKHIR</th>
-                            <th class="py-4 pr-6">CATATAN GURU</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-black/5 text-xs font-semibold text-gray-700">
-                        @forelse($nilaisSiswa as $n)
-                        <tr class="hover:bg-gray-50/80 transition-colors">
-                            <td class="py-4 pl-6 font-bold text-void uppercase">{{ $n->mapel->nama_mapel ?? '-' }}</td>
-                            <td class="py-4 text-center text-gray-400 font-mono font-bold">{{ $n->mapel->kkm ?? 75 }}</td>
-                            <td class="py-4 text-center font-mono text-gray-600">{{ $n->nilai_tugas ?? '-' }}</td>
-                            <td class="py-4 text-center font-mono text-gray-600">{{ $n->nilai_uts ?? '-' }}</td>
-                            <td class="py-4 text-center font-mono text-gray-600">{{ $n->nilai_uas ?? '-' }}</td>
-                            <td class="py-4 text-center font-mono font-black text-cobalt text-sm">
-                                <span class="bg-gray-100 px-2.5 py-1 rounded border border-black/5">{{ $n->nilai_akhir ?? '-' }}</span>
-                            </td>
-                            <td class="py-4 pr-6 text-gray-500 italic uppercase font-mono">"{{ $n->catatan_guru ?? 'TETAP SEMANGAT BELAJAR.' }}"</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="7" class="py-16 text-center">
-                                <div class="flex flex-col items-center justify-center">
-                                    <div class="w-16 h-16 rounded-2xl bg-gray-100 text-gray-400 flex items-center justify-center mb-4 border border-black/5">
-                                        <i class="bi bi-inbox text-3xl"></i>
-                                    </div>
-                                    <h4 class="font-bold text-void text-base uppercase font-mono">BELUM ADA ENTRI NILAI</h4>
-                                    <p class="text-xs text-gray-500 mt-1 max-w-sm">Daftar nilai akademik belum dicatat oleh guru mata pelajaran.</p>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+            @forelse($groupedNilai as $semester => $nilais)
+                <div class="p-6 border-b border-black/10 flex items-center justify-between bg-gray-50">
+                    <h2 class="text-sm font-black text-void uppercase tracking-wider font-mono flex items-center gap-2">
+                        <i class="bi bi-calendar3 text-cobalt text-base"></i> {{ $semester }}
+                    </h2>
+                    <span class="text-[10px] bg-void text-white px-3 py-1 rounded font-mono font-bold uppercase">TOTAL: {{ $nilais->count() }} MAPEL</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface border-b border-black/10 text-void font-mono text-[10px] uppercase tracking-wider">
+                                <th class="py-4 pl-6">MATA PELAJARAN</th>
+                                <th class="py-4 text-center">KKM</th>
+                                <th class="py-4 text-center">TUGAS</th>
+                                <th class="py-4 text-center">UTS</th>
+                                <th class="py-4 text-center">UAS</th>
+                                <th class="py-4 text-center">NILAI AKHIR</th>
+                                <th class="py-4 pr-6">CATATAN GURU</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-black/5 text-xs font-semibold text-gray-700">
+                            @foreach($nilais as $n)
+                            <tr class="hover:bg-gray-50/80 transition-colors">
+                                <td class="py-4 pl-6 font-bold text-void uppercase">{{ $n->mapel->nama_mapel ?? '-' }}</td>
+                                <td class="py-4 text-center text-gray-400 font-mono font-bold">{{ $n->mapel->kkm ?? 75 }}</td>
+                                <td class="py-4 text-center font-mono text-gray-600">{{ $n->nilai_tugas ?? '-' }}</td>
+                                <td class="py-4 text-center font-mono text-gray-600">{{ $n->nilai_uts ?? '-' }}</td>
+                                <td class="py-4 text-center font-mono text-gray-600">{{ $n->nilai_uas ?? '-' }}</td>
+                                <td class="py-4 text-center font-mono font-black text-cobalt text-sm">
+                                    <span class="bg-gray-100 px-2.5 py-1 rounded border border-black/5">{{ $n->nilai_akhir ?? '-' }}</span>
+                                </td>
+                                <td class="py-4 pr-6 text-gray-500 italic uppercase font-mono">"{{ $n->catatan_guru ?? 'TETAP SEMANGAT BELAJAR.' }}"</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @empty
+                <div class="py-16 text-center">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 rounded-2xl bg-gray-100 text-gray-400 flex items-center justify-center mb-4 border border-black/5">
+                            <i class="bi bi-inbox text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-void text-base uppercase font-mono">BELUM ADA ENTRI NILAI</h4>
+                        <p class="text-xs text-gray-500 mt-1 max-w-sm">Daftar nilai akademik belum dicatat oleh guru mata pelajaran.</p>
+                    </div>
+                </div>
+            @endforelse
         </div>
     @else
         {{-- ================================================

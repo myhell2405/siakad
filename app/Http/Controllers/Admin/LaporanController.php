@@ -250,6 +250,35 @@ class LaporanController extends Controller
         return ['rankings' => $rankings, 'totalRanked' => $totalRanked, 'totalSiswa' => $allSiswaKelas->count()];
     }
 
+    public function transkrip(Request $request)
+    {
+        $id_siswa = $request->input('id_siswa');
+        
+        // If student is logged in, ensure they can only print their own transcript
+        if (strtolower(session('role')) === 'siswa') {
+            $id_siswa = session('ref_id');
+        }
+
+        if (!$id_siswa) {
+            return redirect()->back()->with('error', 'Siswa tidak ditemukan.');
+        }
+
+        $siswa = \App\Models\Siswa::findOrFail($id_siswa);
+        $nilaisSiswa = \App\Models\Nilai::with(['mapel', 'kelasTahunAjaran.tahunAjaran', 'kelasTahunAjaran.kelas'])
+            ->where('siswa_id', $id_siswa)
+            ->get();
+
+        $groupedNilai = $nilaisSiswa->groupBy(function($n) {
+            $ta = $n->kelasTahunAjaran->tahunAjaran ?? null;
+            $kelas = $n->kelasTahunAjaran->kelas ?? null;
+            $taName = $ta ? $ta->tahun_ajaran . ' - ' . strtoupper($ta->semester) : 'SEMESTER TIDAK DIKETAHUI';
+            $kelasName = $kelas ? strtoupper($kelas->nama_kelas) : 'KELAS TIDAK DIKETAHUI';
+            return $taName . ' (' . $kelasName . ')';
+        })->sortKeysDesc();
+
+        return view('admin.laporan.print_transkrip', compact('siswa', 'groupedNilai'));
+    }
+
     public function simpanRapor(Request $request)
     {
         if (! in_array(strtolower(session('role')), ['admin', 'wali_kelas'])) {

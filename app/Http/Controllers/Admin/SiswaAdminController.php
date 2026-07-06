@@ -49,7 +49,7 @@ class SiswaAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nisn' => 'required|unique:siswa,nisn',
             'nama_siswa' => 'required',
             'tempat_lahir' => 'required',
@@ -58,7 +58,7 @@ class SiswaAdminController extends Controller
             'agama' => 'required',
         ]);
 
-        Siswa::create($request->validated());
+        Siswa::create($validatedData);
 
         return redirect()
             ->route('admin.siswa.index')
@@ -82,7 +82,7 @@ class SiswaAdminController extends Controller
     {
         $siswa = Siswa::findOrFail($id);
 
-        $request->validate([
+        $validatedData = $request->validate([
             'nisn' => 'required|unique:siswa,nisn,'.$id,
             'nama_siswa' => 'required',
             'tempat_lahir' => 'required',
@@ -91,7 +91,7 @@ class SiswaAdminController extends Controller
             'agama' => 'required',
         ]);
 
-        $siswa->update($request->validated());
+        $siswa->update($validatedData);
 
         return redirect()
             ->route('admin.siswa.index')
@@ -157,5 +157,18 @@ class SiswaAdminController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * View Transkrip Nilai Siswa untuk Admin
+     */
+    public function transkrip($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $nilaisSiswa = \App\Models\Nilai::with(['mapel', 'kelasTahunAjaran.tahunAjaran', 'kelasTahunAjaran.kelas'])
+            ->where('siswa_id', $id)
+            ->get();
+
+        return view('admin.siswa.transkrip', compact('siswa', 'nilaisSiswa'));
     }
 }

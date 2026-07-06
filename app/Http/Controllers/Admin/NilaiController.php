@@ -86,7 +86,9 @@ class NilaiController extends Controller
 
         $nilaisSiswa = collect();
         if (strtolower(session('role')) === 'siswa' && session('ref_id')) {
-            $nilaisSiswa = Nilai::with('mapel')->where('siswa_id', session('ref_id'))->get();
+            $nilaisSiswa = Nilai::with(['mapel', 'kelasTahunAjaran.tahunAjaran', 'kelasTahunAjaran.kelas'])
+                ->where('siswa_id', session('ref_id'))
+                ->get();
         }
 
         return view('admin.nilai.index', compact(
