@@ -29,7 +29,9 @@ class NilaiController extends Controller
         $refId = session('ref_id');
 
         if (in_array($userRole, ['guru', 'wali_kelas']) && $refId) {
-            $kelasIds = \App\Models\GuruKelas::where('id_guru', $refId)->pluck('id_kelas_tahun_ajaran')->toArray();
+            $kelasIds = \App\Models\GuruKelas::whereHas('guruMapel', function ($q) use ($refId) {
+                $q->where('id_guru', $refId);
+            })->pluck('id_kelas_tahun_ajaran')->toArray();
             $queryKelasTa->where(function ($q) use ($kelasIds, $refId) {
                 $q->whereIn('id', $kelasIds)->orWhere('id_wali_kelas', $refId);
             });
@@ -130,7 +132,9 @@ class NilaiController extends Controller
                 abort(403, 'Akses ditolak. Anda tidak mengampu mata pelajaran ini.');
             }
 
-            $kelasIds = \App\Models\GuruKelas::where('id_guru', $refId)->pluck('id_kelas_tahun_ajaran')->toArray();
+            $kelasIds = \App\Models\GuruKelas::whereHas('guruMapel', function ($q) use ($refId) {
+                $q->where('id_guru', $refId);
+            })->pluck('id_kelas_tahun_ajaran')->toArray();
             $kta = KelasTahunAjaran::find($request->id_kelas_ta);
             if ($kta && $kta->id_wali_kelas != $refId && !in_array($request->id_kelas_ta, $kelasIds)) {
                 abort(403, 'Akses ditolak. Anda tidak mengampu kelas ini.');

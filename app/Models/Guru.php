@@ -56,9 +56,12 @@ class Guru extends Model
 
     public function guruKelas()
     {
-        return $this->hasMany(
+        return $this->hasManyThrough(
             GuruKelas::class,
+            GuruMapel::class,
             'id_guru',
+            'id_guru_mapel',
+            'id',
             'id'
         );
     }

@@ -30,15 +30,7 @@ class Kelas extends Model
         );
     }
 
-    public function guru()
-    {
-        return $this->belongsToMany(
-            Guru::class,
-            'guru_kelas',
-            'id_kelas',
-            'id_guru'
-        );
-    }
+
 
     public function kelasTahunAjaran()
     {
