@@ -128,7 +128,6 @@ class NilaiController extends Controller
         if (in_array(strtolower(session('role')), ['guru', 'wali_kelas']) && session('ref_id')) {
             $refId = session('ref_id');
             $kta = KelasTahunAjaran::find($request->id_kelas_ta);
-
             // Wali kelas boleh input semua mapel di kelasnya
             $isWaliKelasOfClass = $kta && $kta->id_wali_kelas == $refId;
 

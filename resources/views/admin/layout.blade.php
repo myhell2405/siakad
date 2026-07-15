@@ -186,7 +186,7 @@
                     <div class="sidebar-text min-w-0 flex-1 truncate">
                         <span
                             class="font-extrabold text-void text-[13.5px] tracking-tight block truncate leading-tight uppercase">SDN
-                            01 DURIAN</span>
+                            01 DURIAN GADANG</span>
                         <span
                             class="inline-block px-2 py-0.5 mt-0.5 bg-black text-white font-mono font-bold text-[9px] uppercase tracking-widest rounded">
                             {{ str_replace('_', ' ', $userRole) }}

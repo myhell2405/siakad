@@ -20,7 +20,28 @@ class AkunController extends Controller
         $query = TbUser::with(['role', 'guru', 'siswa'])->orderBy('id_user', 'desc');
 
         if ($request->filled('role_id')) {
-            $query->where('role_id', $request->role_id);
+            $roleId = $request->role_id;
+            $role = TbRole::find($roleId);
+            $guruRoleId = TbRole::where('nama_role', 'guru')->value('id_role') ?? 2;
+
+            if ($role && $role->nama_role === 'wali_kelas') {
+                $query->where(function ($q) use ($roleId, $guruRoleId) {
+                    $q->where('role_id', $roleId)
+                      ->orWhere(function ($subq) use ($guruRoleId) {
+                          $subq->where('role_id', $guruRoleId)
+                               ->whereHas('guru', function ($g) {
+                                   $g->whereIn('id', \App\Models\KelasTahunAjaran::select('id_wali_kelas')->whereNotNull('id_wali_kelas'));
+                               });
+                      });
+                });
+            } elseif ($role && $role->nama_role === 'guru') {
+                $query->where('role_id', $roleId)
+                      ->whereDoesntHave('guru', function ($g) {
+                          $g->whereIn('id', \App\Models\KelasTahunAjaran::select('id_wali_kelas')->whereNotNull('id_wali_kelas'));
+                      });
+            } else {
+                $query->where('role_id', $roleId);
+            }
         }
 
         if ($request->filled('search')) {
