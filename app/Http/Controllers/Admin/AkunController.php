@@ -134,7 +134,7 @@ class AkunController extends Controller
             return redirect()->route('admin.akun.index')->with('error', 'Role guru tidak ditemukan di database.');
         }
 
-        $gurus = Guru::where('status', 'Aktif')->get();
+        $gurus = Guru::whereRaw('LOWER(status) = ?', ['aktif'])->get();
         $created = 0;
 
         foreach ($gurus as $guru) {

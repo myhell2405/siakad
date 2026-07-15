@@ -102,6 +102,17 @@ class KelasTahunAjaranController extends Controller
             'id_siswa' => 'required',
         ]);
 
+        $kelasTa = KelasTahunAjaran::findOrFail($id);
+
+        // Cek apakah siswa sudah terdaftar di kelas lain pada tahun ajaran yang sama
+        $alreadyEnrolled = SiswaKelas::whereHas('kelasTahunAjaran', function ($q) use ($kelasTa) {
+            $q->where('id_tahun_ajaran', $kelasTa->id_tahun_ajaran);
+        })->where('id_siswa', $request->id_siswa)->exists();
+
+        if ($alreadyEnrolled) {
+            return back()->with('error', 'Siswa sudah terdaftar di kelas lain pada tahun ajaran ini.');
+        }
+
         SiswaKelas::create([
             'id_kelas_tahun_ajaran' => $id,
             'id_siswa' => $request->id_siswa,

@@ -181,10 +181,18 @@ class LaporanController extends Controller
                 ->get()
                 ->keyBy('id_mapel');
 
-            $rapor = Rapor::firstOrCreate([
-                'siswa_id' => $request->input('id_siswa'),
-                'kelas_tahun_ajaran_id' => $id_kelas,
-            ]);
+            // Read-only: jangan buat record rapor baru saat cetak
+            $rapor = Rapor::where('siswa_id', $request->input('id_siswa'))
+                ->where('kelas_tahun_ajaran_id', $id_kelas)
+                ->first();
+
+            if (!$rapor) {
+                // Object in-memory untuk tampilan saja, tidak disimpan ke DB
+                $rapor = new Rapor([
+                    'siswa_id' => $request->input('id_siswa'),
+                    'kelas_tahun_ajaran_id' => $id_kelas,
+                ]);
+            }
 
             $ekskulList = NilaiEkskul::with('ekskul')
                 ->where('siswa_id', $request->input('id_siswa'))

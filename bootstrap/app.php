@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AuthSession;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
+            'auth.session' => AuthSession::class,
             'role' => RoleMiddleware::class,
         ]);
     })

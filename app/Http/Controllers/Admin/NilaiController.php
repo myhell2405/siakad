@@ -127,17 +127,25 @@ class NilaiController extends Controller
 
         if (in_array(strtolower(session('role')), ['guru', 'wali_kelas']) && session('ref_id')) {
             $refId = session('ref_id');
-            $mapelIds = \App\Models\GuruMapel::where('id_guru', $refId)->pluck('id_mapel')->toArray();
-            if (empty($mapelIds) || !in_array($request->id_mapel, $mapelIds)) {
-                abort(403, 'Akses ditolak. Anda tidak mengampu mata pelajaran ini.');
-            }
-
-            $kelasIds = \App\Models\GuruKelas::whereHas('guruMapel', function ($q) use ($refId) {
-                $q->where('id_guru', $refId);
-            })->pluck('id_kelas_tahun_ajaran')->toArray();
             $kta = KelasTahunAjaran::find($request->id_kelas_ta);
-            if ($kta && $kta->id_wali_kelas != $refId && !in_array($request->id_kelas_ta, $kelasIds)) {
-                abort(403, 'Akses ditolak. Anda tidak mengampu kelas ini.');
+
+            // Wali kelas boleh input semua mapel di kelasnya
+            $isWaliKelasOfClass = $kta && $kta->id_wali_kelas == $refId;
+
+            if (!$isWaliKelasOfClass) {
+                // Guru biasa — cek apakah dia mengampu mapel ini di kelas ini
+                $mapelIds = \App\Models\GuruMapel::where('id_guru', $refId)->pluck('id_mapel')->toArray();
+                if (empty($mapelIds) || !in_array($request->id_mapel, $mapelIds)) {
+                    abort(403, 'Akses ditolak. Anda tidak mengampu mata pelajaran ini.');
+                }
+
+                $kelasIds = \App\Models\GuruKelas::whereHas('guruMapel', function ($q) use ($refId) {
+                    $q->where('id_guru', $refId);
+                })->pluck('id_kelas_tahun_ajaran')->toArray();
+
+                if (!in_array($request->id_kelas_ta, $kelasIds)) {
+                    abort(403, 'Akses ditolak. Anda tidak mengampu kelas ini.');
+                }
             }
         }
 
