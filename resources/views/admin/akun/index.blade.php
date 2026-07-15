@@ -159,7 +159,15 @@
                             </td>
                             <td class="py-4 px-6 text-center">
                                 @php
-                                    $badgeColor = match($user->role?->nama_role) {
+                                    $displayRole = $user->role?->nama_role;
+                                    if ($displayRole === 'guru' && $user->ref_id) {
+                                        $isWaliKelas = \App\Models\KelasTahunAjaran::where('id_wali_kelas', $user->ref_id)->exists();
+                                        if ($isWaliKelas) {
+                                            $displayRole = 'wali_kelas';
+                                        }
+                                    }
+
+                                    $badgeColor = match($displayRole) {
                                         'admin' => 'bg-void text-signal border border-black font-mono font-bold',
                                         'guru' => 'bg-gray-100 text-void border border-black/10 font-mono font-bold',
                                         'wali_kelas' => 'bg-cobalt/10 text-cobalt border border-cobalt/20 font-mono font-bold',
@@ -169,7 +177,7 @@
                                     };
                                 @endphp
                                 <span class="inline-flex items-center px-3 py-1 rounded text-[10px] uppercase {{ $badgeColor }}">
-                                    {{ strtoupper(str_replace('_', ' ', $user->role?->nama_role ?? 'UNKNOWN')) }}
+                                    {{ strtoupper(str_replace('_', ' ', $displayRole ?? 'UNKNOWN')) }}
                                 </span>
                             </td>
                             <td class="py-4 px-6 text-center">

@@ -181,7 +181,7 @@ class LaporanController extends Controller
                 ->get()
                 ->keyBy('id_mapel');
 
-            $rapor = Rapor::firstOrCreate([
+            $rapor = Rapor::firstOrNew([
                 'siswa_id' => $request->input('id_siswa'),
                 'kelas_tahun_ajaran_id' => $id_kelas,
             ]);

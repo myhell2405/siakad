@@ -99,15 +99,27 @@ class KelasTahunAjaranController extends Controller
     public function storeSiswa(Request $request, $id)
     {
         $request->validate([
-            'id_siswa' => 'required',
+            'id_siswa' => 'required|exists:siswa,id',
         ]);
+
+        // Ambil data kelas tahun ajaran yang sedang dituju
+        $kelasTa = KelasTahunAjaran::findOrFail($id);
+
+        // Cek apakah siswa sudah terdaftar di kelas manapun dalam tahun ajaran yang sama
+        $alreadyEnrolled = SiswaKelas::whereHas('kelasTahunAjaran', function ($q) use ($kelasTa) {
+            $q->where('id_tahun_ajaran', $kelasTa->id_tahun_ajaran);
+        })->where('id_siswa', $request->id_siswa)->exists();
+
+        if ($alreadyEnrolled) {
+            return back()->with('error', 'Siswa sudah terdaftar di kelas lain pada tahun ajaran ini. Hapus dulu dari kelas sebelumnya.');
+        }
 
         SiswaKelas::create([
             'id_kelas_tahun_ajaran' => $id,
-            'id_siswa' => $request->id_siswa,
+            'id_siswa'              => $request->id_siswa,
         ]);
 
-        return back()->with('success', 'Siswa berhasil ditambahkan');
+        return back()->with('success', 'Siswa berhasil ditambahkan ke kelas.');
     }
 
     /*
