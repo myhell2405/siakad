@@ -1,3 +1,69 @@
+# SIAKAD
+
+Sistem Informasi Akademik untuk mengelola data sekolah, guru, siswa, kelas, mata pelajaran, nilai, ekstrakurikuler, dan laporan akademik.
+
+## Teknologi
+
+- PHP 8.2+
+- Laravel 12
+- SQLite (konfigurasi default)
+- Vite dan Tailwind CSS
+
+## Persiapan
+
+Pastikan PHP, Composer, Node.js, dan npm sudah terpasang. Jalankan perintah berikut dari direktori proyek:
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+npm install
+```
+
+Buat database SQLite lalu jalankan migrasi:
+
+```bash
+touch database/database.sqlite
+php artisan migrate
+```
+
+## Data awal
+
+Seeder membuat role, akun contoh, dan data akademik. Atur password akun seed secara lokal sebelum menjalankan seeder:
+
+```bash
+SEEDER_PASSWORD='ganti-dengan-password-kuat' php artisan db:seed
+```
+
+Semua akun hasil seeder menggunakan password tersebut. Username contoh dapat dilihat di `database/seeders/UserSeeder.php`. Jangan gunakan password contoh untuk lingkungan produksi.
+
+## Menjalankan aplikasi
+
+Untuk menjalankan server Laravel dan Vite secara bersamaan:
+
+```bash
+composer run dev
+```
+
+Aplikasi tersedia di `http://localhost:8000`.
+
+## Pengujian
+
+```bash
+php artisan test
+```
+
+## Struktur utama
+
+- `app/` - model, controller, dan middleware aplikasi
+- `database/` - migration, factory, dan seeder
+- `resources/views/` - antarmuka Blade
+- `routes/web.php` - definisi route web
+- `tests/` - pengujian aplikasi
+
+## Lisensi
+
+Proyek ini menggunakan lisensi MIT.
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
